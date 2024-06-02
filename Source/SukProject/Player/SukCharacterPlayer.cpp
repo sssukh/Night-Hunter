@@ -17,6 +17,7 @@
 #include "Engine/LocalPlayer.h"
 
 #include "Animation/SukAnimInstance.h"
+#include "Weapon/SukWeaponComponent.h"
 
 
 
@@ -33,29 +34,13 @@ ASukCharacterPlayer::ASukCharacterPlayer()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
-	/*static ConstructorHelpers::FObjectFinder<UInputAction> InputActionJumpRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_Jump.IA_Jump'"));
-	if (InputActionJumpRef.Object)
-	{
-		JumpAction = InputActionJumpRef.Object;
-	}
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_Move.IA_Move'"));
-	if (InputActionMoveRef.Object)
-	{
-		MoveAction = InputActionMoveRef.Object;
-	}
-
-	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionLookRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_Look.IA_Look'"));
-	if (InputActionLookRef.Object)
-	{
-		LookAction = InputActionLookRef.Object;
-	}*/
 
 	IsRunning = false;
 
 	IsDodging = false;
 
 	// Weapon
-	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
+	Weapon = CreateDefaultSubobject<USukWeaponComponent>(TEXT("Weapon"));
 	Weapon->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 
 	bIsHoldingWeapon = false;
@@ -147,6 +132,9 @@ void ASukCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		//Weapon
 		EnhancedInputComponent->BindAction(EquipWeaponAction, ETriggerEvent::Triggered, this, &ASukCharacterPlayer::ChangeCharacterControl);
+
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ASukCharacterPlayer::StartFire);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &ASukCharacterPlayer::EndFire);
 
 
 	}
@@ -254,6 +242,30 @@ void ASukCharacterPlayer::DodgeEnd(UAnimMontage* InDodgeMontage, bool bInterrupt
 void ASukCharacterPlayer::EquipWeapon()
 {
 	bIsHoldingWeapon = !bIsHoldingWeapon;
+}
+
+void ASukCharacterPlayer::StartFire()
+{
+	if (Weapon)
+	{
+		Weapon->StartFire();
+	}
+}
+
+void ASukCharacterPlayer::EndFire()
+{
+	if (Weapon)
+	{
+		Weapon->EndFire();
+	}
+}
+
+void ASukCharacterPlayer::FireHitCheck()
+{
+	FHitResult OutHitResult;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(Attack), false, this);
+
+
 }
 
 

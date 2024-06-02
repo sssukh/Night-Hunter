@@ -66,7 +66,7 @@ void USukAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 void USukAnimInstance::PlayEquipUnequipMontage()
 {
-	if (bIsHoldingWeapon)
+	if (!bIsHoldingWeapon)
 	{
 		Montage_Play(PickWeaponMontage,2.0f);
 	}

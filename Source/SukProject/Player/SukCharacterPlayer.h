@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Character/SukCharacterBase.h"
 #include "InputActionValue.h"
+#include "Interface/SukAnimationFireInterface.h"
 #include "SukCharacterPlayer.generated.h"
 
 class USpringArmComponent;
@@ -13,7 +14,7 @@ class UInputMappingContext;
 class UInputComponent;
 class UInputAction;
 class UAnimMontage;
-
+class USukWeaponComponent;
 
 
 
@@ -21,7 +22,7 @@ class UAnimMontage;
  * 
  */
 UCLASS()
-class SUKPROJECT_API ASukCharacterPlayer : public ASukCharacterBase
+class SUKPROJECT_API ASukCharacterPlayer : public ASukCharacterBase, public ISukAnimationFireInterface
 {
 	GENERATED_BODY()
 public:
@@ -116,9 +117,10 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+	// Weapon
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Equipment, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class USkeletalMeshComponent> Weapon;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Equipment, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USukWeaponComponent> Weapon;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Weapon)
 	bool bIsHoldingWeapon;
@@ -127,7 +129,21 @@ public:
 	TObjectPtr<UInputAction> EquipWeaponAction;
 
 	void EquipWeapon();
+
+	void StartFire();
+
+	void EndFire();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> FireAction;
+
+	// Fire Hit Check 
+public:
+	virtual void FireHitCheck() override;
 	
+
+
+
 };
 
 

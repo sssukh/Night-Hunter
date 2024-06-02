@@ -4,6 +4,7 @@
 #include "SukCharacterBase.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Physics/SukPhysics.h"
 
 // Sets default values
 ASukCharacterBase::ASukCharacterBase()
@@ -15,7 +16,7 @@ ASukCharacterBase::ASukCharacterBase()
 
 	// Capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Pawn"));
+	GetCapsuleComponent()->SetCollisionProfileName(CPROFILE_SUKCAPSULE);
 
 	// Movement
 	GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -43,6 +44,26 @@ ASukCharacterBase::ASukCharacterBase()
 		GetMesh()->SetAnimInstanceClass(AnimInstanceMeshRef.Class);
 	}
 
+}
+
+void ASukCharacterBase::SetDead()
+{
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+	PlayDeadAnimation();
+	SetActorEnableCollision(false);
+
+}
+
+void ASukCharacterBase::PlayDeadAnimation()
+{
+	UAnimInstance* AnimIns = GetMesh()->GetAnimInstance();
+	AnimIns->StopAllMontages(0.0f);
+	AnimIns->Montage_Play(DeadMontage);
+}
+
+void ASukCharacterBase::TakeDamage()
+{
+	SetDead();
 }
 
 
