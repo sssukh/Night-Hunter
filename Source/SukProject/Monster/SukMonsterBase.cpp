@@ -18,12 +18,21 @@ ASukMonsterBase::ASukMonsterBase()
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.0f;
 
 	GetCapsuleComponent()->SetCollisionProfileName(CPROFILE_SUKCAPSULE);
+	SetActorEnableCollision(false);
+
 
 	AIControllerClass = ASukAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	AttackRange = 100.0f;
 	Hp = 100;
+
+}
+
+void ASukMonsterBase::BeginPlay()
+{
+	Super::BeginPlay();
+	Spawn();
 }
 
 float ASukMonsterBase::GetAIPatrolRadius()
@@ -137,10 +146,43 @@ void ASukMonsterBase::SetDead()
 void ASukMonsterBase::PlayDeadMontage()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-
-	AnimInstance->StopAllMontages(0.0f);
-	AnimInstance->Montage_Play(DeadMontage);
+	if (AnimInstance)
+	{
+		AnimInstance->StopAllMontages(0.0f);
+		AnimInstance->Montage_Play(DeadMontage);
+	}
 }
+
+void ASukMonsterBase::Spawn()
+{
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+	PlaySpawnMontage();
+}
+
+void ASukMonsterBase::PlaySpawnMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance)
+	{
+		AnimInstance->StopAllMontages(0.0f);
+		AnimInstance->Montage_Play(SpawnMontage);
+
+		FOnMontageEnded EndDelegate;
+		EndDelegate.BindUObject(this, &ASukMonsterBase::SetSpawnedMonster);
+
+		AnimInstance->Montage_SetEndDelegate(EndDelegate, SpawnMontage);
+	}
+}
+
+void ASukMonsterBase::SetSpawnedMonster(UAnimMontage* TargetMontage, bool IsProperlyEnded)
+{
+	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+	SetActorEnableCollision(true);
+}
+
+
+
+
 
 
 

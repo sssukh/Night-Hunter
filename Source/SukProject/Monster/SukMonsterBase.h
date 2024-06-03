@@ -19,6 +19,8 @@ public:
 	// Sets default values for this character's properties
 	ASukMonsterBase();
 
+	virtual void BeginPlay() override;
+
 	virtual float GetAIPatrolRadius() override;
 	virtual float GetAIAttackRange() override;
 	virtual float GetAITurnSpeed() override;
@@ -43,12 +45,20 @@ public:
 
 	float DeadEventDelayTime = 3.0f;
 
+	// Spawn
+	virtual void Spawn();
+	void PlaySpawnMontage();
+	void SetSpawnedMonster(UAnimMontage* TargetMontage, bool IsProperlyEnded);
+
 	// Animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
 	TObjectPtr<UAnimMontage> AttackMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
 	TObjectPtr<UAnimMontage> DeadMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
+	TObjectPtr<UAnimMontage> SpawnMontage;
 public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Stat)
 	float AttackSpeed;
