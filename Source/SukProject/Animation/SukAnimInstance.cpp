@@ -11,19 +11,6 @@ USukAnimInstance::USukAnimInstance()
 	MovingThreshold = 3.0f;
 	JumpingThreshold = 50.0f;
 
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> PickWeaponMontageFinder(TEXT("/Game/Animations/AnimationMontage/AM_GrabWeaponFromBehind.AM_GrabWeaponFromBehind"));
-	if (PickWeaponMontageFinder.Object)
-	{
-		PickWeaponMontage = PickWeaponMontageFinder.Object;
-	}
-
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> PutBackWeaponMontageFinder(TEXT("/Game/Animations/AnimationMontage/AM_PutBackWeaponBehind.AM_PutBackWeaponBehind"));
-	if (PutBackWeaponMontageFinder.Object)
-	{
-		PutBackWeaponMontage = PutBackWeaponMontageFinder.Object;
-	}
-
-	
 }
 
 void USukAnimInstance::NativeInitializeAnimation()
@@ -60,18 +47,8 @@ void USukAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 		bIsDodging = OwnerPlayer->IsDodging;
 
-		bIsHoldingWeapon = OwnerPlayer->bIsHoldingWeapon;
+		bIsOnFight = OwnerPlayer->bIsOnFight;
 	}
 }
 
-void USukAnimInstance::PlayEquipUnequipMontage()
-{
-	if (!bIsHoldingWeapon)
-	{
-		Montage_Play(PickWeaponMontage,2.0f);
-	}
-	else
-	{
-		Montage_Play(PutBackWeaponMontage, 2.0f);
-	}
-}
+

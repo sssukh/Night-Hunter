@@ -43,9 +43,9 @@ ASukCharacterPlayer::ASukCharacterPlayer()
 	Weapon = CreateDefaultSubobject<USukWeaponComponent>(TEXT("Weapon"));
 	Weapon->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 
-	bIsHoldingWeapon = false;
+	bIsOnFight = false;
 
-	CurrentCharacterControlType = ECharacterControlType::Default;
+	// CurrentCharacterControlType = ECharacterControlType::Default;
 }
 
 void ASukCharacterPlayer::BeginPlay()
@@ -64,47 +64,46 @@ void ASukCharacterPlayer::BeginPlay()
 	}
 }
 
-void ASukCharacterPlayer::ChangeCharacterControl()
-{
-	if (CurrentCharacterControlType == ECharacterControlType::Default)
-	{
-		SetCharacterControl(ECharacterControlType::HoldingWeapon);
-	}
-	else if (CurrentCharacterControlType == ECharacterControlType::HoldingWeapon)
-	{
-		SetCharacterControl(ECharacterControlType::Default);
-	}
-}
-
-void ASukCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterControlType)
-{
-	USukCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType];
-	check(NewCharacterControl);
-
-	APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
-
-	SetCharacterControlData(NewCharacterControl);
-
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-	{
-		Subsystem->ClearAllMappings();
-		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
-		if (NewMappingContext)
-		{
-			Subsystem->AddMappingContext(NewMappingContext, 0);
-		}
-	}
-
-	CurrentCharacterControlType = NewCharacterControlType;
-}
-
-void ASukCharacterPlayer::SetCharacterControlData(const USukCharacterControlData* CharacterControlData)
-{
-	USukAnimInstance* AnimInstance = Cast<USukAnimInstance>(GetMesh()->GetAnimInstance());
-	AnimInstance->PlayEquipUnequipMontage();
-
-	bIsHoldingWeapon = CharacterControlData->bIsHoldingWeapon;
-}
+//void ASukCharacterPlayer::ChangeCharacterControl()
+//{
+//	if (CurrentCharacterControlType == ECharacterControlType::Default)
+//	{
+//		SetCharacterControl(ECharacterControlType::HoldingWeapon);
+//	}
+//	else if (CurrentCharacterControlType == ECharacterControlType::HoldingWeapon)
+//	{
+//		SetCharacterControl(ECharacterControlType::Default);
+//	}
+//}
+//
+//void ASukCharacterPlayer::SetCharacterControl(ECharacterControlType NewCharacterControlType)
+//{
+//	USukCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType];
+//	check(NewCharacterControl);
+//
+//	APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
+//
+//	SetCharacterControlData(NewCharacterControl);
+//
+//	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+//	{
+//		Subsystem->ClearAllMappings();
+//		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
+//		if (NewMappingContext)
+//		{
+//			Subsystem->AddMappingContext(NewMappingContext, 0);
+//		}
+//	}
+//
+//	CurrentCharacterControlType = NewCharacterControlType;
+//}
+//
+//void ASukCharacterPlayer::SetCharacterControlData(const USukCharacterControlData* CharacterControlData)
+//{
+//	// 이제 무기가 장착되어있기 때문에 ControlData 없이 전투 상태 돌입으로 변경.
+//
+//	bIsOnFight = CharacterControlData->bIsHoldingWeapon;
+//}
 
 
 void ASukCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -131,7 +130,7 @@ void ASukCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent->BindAction(DodgeAction, ETriggerEvent::Triggered, this, &ASukCharacterPlayer::Dodge);
 
 		//Weapon
-		EnhancedInputComponent->BindAction(EquipWeaponAction, ETriggerEvent::Triggered, this, &ASukCharacterPlayer::ChangeCharacterControl);
+		// EnhancedInputComponent->BindAction(EquipWeaponAction, ETriggerEvent::Triggered, this, &ASukCharacterPlayer::ChangeCharacterControl);
 
 		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ASukCharacterPlayer::StartFire);
 		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &ASukCharacterPlayer::EndFire);
@@ -235,20 +234,33 @@ void ASukCharacterPlayer::Dodge()
 void ASukCharacterPlayer::DodgeEnd(UAnimMontage* InDodgeMontage, bool bInterrupted)
 {
 	IsDodging = false;
-
-
 }
 
-void ASukCharacterPlayer::EquipWeapon()
+void ASukCharacterPlayer::SetBeginOfFight()
 {
-	bIsHoldingWeapon = !bIsHoldingWeapon;
+	bIsOnFight = true;
+	GetWorldTimerManager().ClearTimer(FightTimerHandle);
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance)
+	{
+		AnimInstance->Montage_Play(AimMontage);
+		AnimInstance->Montage_JumpToSection((TEXT("Aiming")), AimMontage);
+	}
 }
+
+void ASukCharacterPlayer::SetEndOfFight()
+{
+	bIsOnFight = false;
+}
+
 
 void ASukCharacterPlayer::StartFire()
 {
 	if (Weapon)
 	{
 		Weapon->StartFire();
+		SetBeginOfFight();
 	}
 }
 
@@ -257,6 +269,7 @@ void ASukCharacterPlayer::EndFire()
 	if (Weapon)
 	{
 		Weapon->EndFire();
+		GetWorldTimerManager().SetTimer(FightTimerHandle, this, &ASukCharacterPlayer::SetEndOfFight, 5.0f, false);
 	}
 }
 

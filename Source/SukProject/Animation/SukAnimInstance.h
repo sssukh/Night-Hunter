@@ -75,18 +75,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float ForwardInput;
 
-	// Weapon Section
-	void PlayEquipUnequipMontage();
+	
 
-	UPROPERTY(VisibleDefaultsOnly,BlueprintReadOnly,Category = Attack, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* PickWeaponMontage;
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* PutBackWeaponMontage;
-
-	// 무기를 들고있는지 나타내는 값
+	// 전투중인지를 나타내는 값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
-	uint8 bIsHoldingWeapon : 1;
+	uint8 bIsOnFight : 1;
 
 
 	TObjectPtr<ASukCharacterPlayer> OwnerPlayer;

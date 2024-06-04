@@ -36,16 +36,16 @@ public:
 	// To add mapping context
 	virtual void BeginPlay();
 
-	void ChangeCharacterControl();
+	//void ChangeCharacterControl();
 
-	void SetCharacterControl(ECharacterControlType NewCharacterControlType);
+	//void SetCharacterControl(ECharacterControlType NewCharacterControlType);
 
-	void SetCharacterControlData(const USukCharacterControlData* CharacterControlData);
+	//void SetCharacterControlData(const USukCharacterControlData* CharacterControlData);
 
-	ECharacterControlType CurrentCharacterControlType;
+	//ECharacterControlType CurrentCharacterControlType;
 
-	UPROPERTY(EditAnywhere, Category = CharacterControl, Meta = (AllowPrivateAccess = "true"))
-	TMap<ECharacterControlType, USukCharacterControlData*> CharacterControlManager;
+	//UPROPERTY(EditAnywhere, Category = CharacterControl, Meta = (AllowPrivateAccess = "true"))
+	//TMap<ECharacterControlType, USukCharacterControlData*> CharacterControlManager;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> CameraBoom;
@@ -119,16 +119,21 @@ public:
 
 	// Weapon
 public:
+	void SetBeginOfFight();
+	void SetEndOfFight();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Equipment, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USukWeaponComponent> Weapon;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Weapon)
-	bool bIsHoldingWeapon;
+	bool bIsOnFight;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> EquipWeaponAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Montage, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAnimMontage> AimMontage;
 
-	void EquipWeapon();
+	/*UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> EquipWeaponAction;*/
+
 
 	void StartFire();
 
@@ -136,6 +141,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> FireAction;
+
+	FTimerHandle FightTimerHandle;
 
 	// Fire Hit Check 
 public:
