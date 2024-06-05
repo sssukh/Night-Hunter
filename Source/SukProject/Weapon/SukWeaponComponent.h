@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/ActorComponent.h"
 #include "SukWeaponComponent.generated.h"
 
 
@@ -24,7 +25,7 @@ enum class EFireType : uint8
  * 
  */
 UCLASS()
-class SUKPROJECT_API USukWeaponComponent : public USkeletalMeshComponent
+class SUKPROJECT_API USukWeaponComponent : public UActorComponent
 {
 	GENERATED_BODY()
 public:
@@ -39,8 +40,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	USoundBase* FireSound;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	UAnimMontage* GunFireAnimation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	UAnimMontage* CharacterFireAnimation;

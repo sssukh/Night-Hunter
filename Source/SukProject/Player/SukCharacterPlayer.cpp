@@ -41,7 +41,6 @@ ASukCharacterPlayer::ASukCharacterPlayer()
 
 	// Weapon
 	Weapon = CreateDefaultSubobject<USukWeaponComponent>(TEXT("Weapon"));
-	Weapon->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 
 	bIsOnFight = false;
 
@@ -242,10 +241,9 @@ void ASukCharacterPlayer::SetBeginOfFight()
 	GetWorldTimerManager().ClearTimer(FightTimerHandle);
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if (AnimInstance)
+	if (AnimInstance && !AnimInstance->Montage_IsActive(AimMontage))
 	{
-		AnimInstance->Montage_Play(AimMontage);
-		AnimInstance->Montage_JumpToSection((TEXT("Aiming")), AimMontage);
+		AnimInstance->Montage_Play(AimMontage,2.0f);
 	}
 }
 
@@ -269,7 +267,8 @@ void ASukCharacterPlayer::EndFire()
 	if (Weapon)
 	{
 		Weapon->EndFire();
-		GetWorldTimerManager().SetTimer(FightTimerHandle, this, &ASukCharacterPlayer::SetEndOfFight, 5.0f, false);
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		GetWorldTimerManager().SetTimer(FightTimerHandle, this, &ASukCharacterPlayer::SetEndOfFight, 3.0f, false);
 	}
 }
 
