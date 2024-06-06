@@ -47,7 +47,7 @@ float ASukMonsterBase::GetAIAttackRange()
 
 float ASukMonsterBase::GetAITurnSpeed()
 {
-	return 0.0f;
+	return 5.0f;
 }
 
 void ASukMonsterBase::SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished)

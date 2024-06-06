@@ -26,6 +26,8 @@ public:
 	// Sets default values for this character's properties
 	ASukCharacterBase();
 
+	virtual void BeginPlay() override;
+
 	// Dead Section
 	virtual void SetDead();
 	void PlayDeadAnimation();

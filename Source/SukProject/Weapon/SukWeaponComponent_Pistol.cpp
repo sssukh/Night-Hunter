@@ -73,7 +73,7 @@ void USukWeaponComponent_Pistol::FireWithLineTrace()
 
 #if ENABLE_DRAW_DEBUG
 	FColor HitColor = HitDetected ? FColor::Green : FColor::Red;
-	DrawDebugLine(GetWorld(), Start, End, HitColor, false,10.0f);
+	DrawDebugLine(GetWorld(), Start, End, HitColor, false,5.0f);
 
 #endif
 

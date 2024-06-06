@@ -32,6 +32,12 @@ void UBTService_TrackingUser::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 
 	APawn* Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 
+	if (!Player->GetActorEnableCollision())
+	{
+		OwnerComp.GetBlackboardComponent()->SetValueAsObject(BBKEY_TARGET, nullptr);
+		return;
+	}
+
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(BBKEY_TARGET, Player);
 	
 	float DistanceToTarget = ControllingPawn->GetDistanceTo(Player);

@@ -21,6 +21,7 @@ public:
 
 	virtual void BeginPlay() override;
 
+	// AI Interface
 	virtual float GetAIPatrolRadius() override;
 	virtual float GetAIAttackRange() override;
 	virtual float GetAITurnSpeed() override;
