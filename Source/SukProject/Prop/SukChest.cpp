@@ -2,13 +2,58 @@
 
 
 #include "Prop/SukChest.h"
+#include "Components/BoxComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Physics/SukPhysics.h"
+
 
 // Sets default values
 ASukChest::ASukChest()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+
+	RootComponent = Trigger;
+	Mesh->SetupAttachment(Trigger);
+
+	// 트리거 만들고 여기에 등록하기.
+	Trigger->SetCollisionProfileName(CPROFILE_CHEST);
+	Trigger->SetBoxExtent(FVector(40.0f, 42.0f, 30.0f));
+
+	Mesh->SetCollisionProfileName(TEXT("NoCollision"));
+
+	IsOpened = false;
+}
+
+void ASukChest::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ASukChest::OnOverlapBegin);
+}
+
+
+
+void ASukChest::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
+{
+	PlayOpenAnimation();
+}
+
+void ASukChest::OpenChest()
+{
 
 }
+
+void ASukChest::PlayOpenAnimation()
+{
+	if (!IsOpened)
+	{
+		UAnimInstance* AnimInstance = Mesh->GetAnimInstance();
+		AnimInstance->Montage_Play(OpenMontage, 1.5f);
+
+		IsOpened = true;
+	}
+}
+
+
 
 
