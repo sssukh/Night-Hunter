@@ -1,0 +1,3 @@
+Name,MaxHp,AttDamage,AttSpeed,AttRange,MovementSpeed,Jump,CritRate,CritDamage
+Player,100,10,1,300,300,10,0.1,1.5
+LVLUpStat,30,3,0,0,0,0,0,0

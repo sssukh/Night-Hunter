@@ -20,7 +20,7 @@ ASukChest::ASukChest()
 	Trigger->SetCollisionProfileName(CPROFILE_CHEST);
 	Trigger->SetBoxExtent(FVector(40.0f, 42.0f, 30.0f));
 
-	Mesh->SetCollisionProfileName(TEXT("NoCollision"));
+	Mesh->SetCollisionProfileName(TEXT("BlockAllDynamic"));
 
 	IsOpened = false;
 }
