@@ -9,7 +9,7 @@
 
 #define LEVELUPSTAT 1
 
-DECLARE_LOG_CATEGORY_EXTERN(LogSukGameManager, Error, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogSukGameDataManager, Error, All);
 /**
  * 
  */
@@ -24,6 +24,7 @@ public:
 
 	// CharacterData Section
 public:
+
 	// If put level bigger than 2, get Level Up stat
 	FORCEINLINE FSukCharacterStat GetCharacterStat(int32 level) const { return CharacterStatTable.IsValidIndex(level - 1) ? CharacterStatTable[level - 1] : CharacterStatTable[LEVELUPSTAT]; }
 
@@ -32,4 +33,6 @@ public:
 
 private:
 	TArray<FSukCharacterStat> CharacterStatTable;
+
+	// Monster Data 2개, Item Data 1개 추가 필요
 };

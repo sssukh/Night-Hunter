@@ -10,7 +10,7 @@ struct FSukCharacterStat : public FTableRowBase
 	GENERATED_BODY()
 public:
 
-	FSukCharacterStat() : MaxHp(0.0f), AttDamage(0.0f), AttSpeed(0.0f), AttRange(0.0f), MovementSpeed(0.0f), Jump(0.0f), CritRate(0.0f), CritDamage(0.0f) {}
+	FSukCharacterStat() : MaxHp(0.0f), AttDamage(0.0f), AttSpeed(0.0f), AttRange(0.0f), MovementSpeed(0.0f), Jump(0.0f), CritRate(0.0f), CritDamage(0.0f){}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
 	float MaxHp;
@@ -35,6 +35,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
 	float CritDamage;
+
 
 	FSukCharacterStat operator+(const FSukCharacterStat& Other) const
 	{
