@@ -22,7 +22,7 @@ class USukWeaponComponent;
  * 
  */
 UCLASS()
-class SUKPROJECT_API ASukCharacterPlayer : public ASukCharacterBase, public ISukAnimationFireInterface
+class SUKPROJECT_API ASukCharacterPlayer : public ASukCharacterBase //, public ISukAnimationFireInterface
 {
 	GENERATED_BODY()
 public:
@@ -35,6 +35,8 @@ public:
 
 	// To add mapping context
 	virtual void BeginPlay();
+
+	virtual void PostInitializeComponents() override;
 
 	//void ChangeCharacterControl();
 
@@ -144,9 +146,9 @@ public:
 
 	FTimerHandle FightTimerHandle;
 
-	// Fire Hit Check 
-public:
-	virtual void FireHitCheck() override;
+//	// Fire Hit Check 
+//public:
+//	virtual void FireHitCheck() override;
 	
 
 

@@ -7,6 +7,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Physics/SukPhysics.h"
 #include "Interface/SukCharacterAnimInterface.h"
+#include "CharacterStat/SukGroundMonsterStatComponent.h"
+
 
 
 // Sets default values
@@ -24,6 +26,8 @@ ASukMonsterBase::ASukMonsterBase()
 	AIControllerClass = ASukAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+	Stat = CreateDefaultSubobject<USukGroundMonsterStatComponent>(TEXT("Stat"));
+
 	AttackRange = 100.0f;
 	Hp = 100;
 
@@ -33,6 +37,7 @@ void ASukMonsterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	Spawn();
+	Stat->OnMonsterHpZero.AddUObject(this, &ASukMonsterBase::SetDead);
 }
 
 float ASukMonsterBase::GetAIPatrolRadius()
@@ -101,7 +106,8 @@ void ASukMonsterBase::AttackHitCheck()
 		ISukCharacterAnimInterface* CharacterAnimInterface = Cast<ISukCharacterAnimInterface>(OutHitResult.GetActor());
 		if (CharacterAnimInterface)
 		{
-			CharacterAnimInterface->TakeDamage();
+			// 공격 데미지 임의로 50 넣음
+			CharacterAnimInterface->TakeDamage(50.0f);
 		}
 	}
 
@@ -114,11 +120,9 @@ void ASukMonsterBase::AttackHitCheck()
 #endif 
 }
 
-void ASukMonsterBase::GetDamaged(float inDamage)
+void ASukMonsterBase::GetDamaged(float InDamage)
 {
-	// 간단하게 죽는 모션 넣기
-	SetDead();
-	// UE_LOG(LogTemp, Warning, TEXT("Monster Got Shot"));
+	Stat->ApplyDamage(InDamage);
 }
 
 void ASukMonsterBase::SetDead()
@@ -141,6 +145,8 @@ void ASukMonsterBase::SetDead()
 			Destroy();
 		}
 	), DeadEventDelayTime, false);
+
+
 }
 
 void ASukMonsterBase::PlayDeadMontage()

@@ -15,9 +15,9 @@
 #include "Animation/AnimMontage.h"
 #include "Character/SukCharacterControlData.h"
 #include "Engine/LocalPlayer.h"
-
 #include "Animation/SukAnimInstance.h"
 #include "Weapon/SukWeaponComponent.h"
+#include "CharacterStat/SukCharacterStatComponent.h"
 
 
 
@@ -42,6 +42,7 @@ ASukCharacterPlayer::ASukCharacterPlayer()
 	// Weapon
 	Weapon = CreateDefaultSubobject<USukWeaponComponent>(TEXT("Weapon"));
 
+
 	bIsOnFight = false;
 
 	// CurrentCharacterControlType = ECharacterControlType::Default;
@@ -61,6 +62,13 @@ void ASukCharacterPlayer::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+}
+
+void ASukCharacterPlayer::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	Weapon->SetAttackDamage(Stat->GetStat().AttDamage);
+
 }
 
 //void ASukCharacterPlayer::ChangeCharacterControl()
@@ -270,14 +278,6 @@ void ASukCharacterPlayer::EndFire()
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 		GetWorldTimerManager().SetTimer(FightTimerHandle, this, &ASukCharacterPlayer::SetEndOfFight, 3.0f, false);
 	}
-}
-
-void ASukCharacterPlayer::FireHitCheck()
-{
-	FHitResult OutHitResult;
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(Attack), false, this);
-
-
 }
 
 

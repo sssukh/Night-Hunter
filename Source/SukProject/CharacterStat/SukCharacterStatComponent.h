@@ -5,8 +5,11 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "GameData/SukCharacterStat.h"
+#include "GameData/SukCharacterExp.h"
 #include "SukCharacterStatComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float/*CurrentHp*/);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUKPROJECT_API USukCharacterStatComponent : public UActorComponent
@@ -19,9 +22,14 @@ public:
 
 	virtual void InitializeComponent() override;
 public:
+	FOnHpZeroDelegate OnHpZero;
+	FOnHpChangedDelegate OnHpChanged;
+
 	void SetLevelStat(int32 InNewLevel);
 
 	void SetHp(int32 InNewHp);
+
+	void LevelUp();
 
 	float ApplyDamage(float InDamage);
 
@@ -31,6 +39,10 @@ public:
 
 	FORCEINLINE float GetCurrentLevel() const { return CurrentLevel; }
 	FORCEINLINE void AddBaseStat(const FSukCharacterStat& InAddBaseStat) { BaseStat = BaseStat + InAddBaseStat; }
+	FORCEINLINE void SetBaseStat(const FSukCharacterStat& InBaseStat) { BaseStat = InBaseStat; }
+	FORCEINLINE const FSukCharacterStat GetStat() { return BaseStat + ModifierStat; }
+	FORCEINLINE float GetMaxHp() { return BaseStat.MaxHp + ModifierStat.MaxHp; }
+	FORCEINLINE const float GetMaxExp() { return MaxExp; }
 
 protected:
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
@@ -38,6 +50,9 @@ protected:
 	
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentExp;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
+	float MaxExp;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentLevel;
@@ -50,4 +65,7 @@ protected:
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FSukCharacterStat ModifierStat;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	FSukCharacterExp ExpData;
 };

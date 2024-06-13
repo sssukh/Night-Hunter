@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Physics/SukPhysics.h"
+#include "CharacterStat/SukCharacterStatComponent.h"
 
 // Sets default values
 ASukCharacterBase::ASukCharacterBase()
@@ -44,6 +45,8 @@ ASukCharacterBase::ASukCharacterBase()
 		GetMesh()->SetAnimInstanceClass(AnimInstanceMeshRef.Class);
 	}
 
+	Stat = CreateDefaultSubobject<USukCharacterStatComponent>(TEXT("Stat"));
+
 }
 
 void ASukCharacterBase::BeginPlay()
@@ -55,6 +58,8 @@ void ASukCharacterBase::BeginPlay()
 	{
 		EnableInput(PlayerController);
 	}
+	
+	Stat->OnHpZero.AddUObject(this, &ASukCharacterBase::SetDead);
 }
 
 void ASukCharacterBase::SetDead()
@@ -77,9 +82,14 @@ void ASukCharacterBase::PlayDeadAnimation()
 	AnimIns->Montage_Play(DeadMontage);
 }
 
-void ASukCharacterBase::TakeDamage()
+void ASukCharacterBase::TakeDamage(float InDamage)
 {
-	SetDead();
+	Stat->ApplyDamage(InDamage);
+}
+
+void ASukCharacterBase::GetExp(float InExp)
+{
+
 }
 
 

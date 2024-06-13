@@ -7,7 +7,7 @@ DEFINE_LOG_CATEGORY(LogSukGameDataManager);
 
 USukGameDataManager::USukGameDataManager()
 {
-	static ConstructorHelpers::FObjectFinder<UDataTable> DataTableRef(TEXT("/Script/Engine.DataTable'/Game/GameData/DT_CharacterStat.DT_CharacterStat'"));
+	static ConstructorHelpers::FObjectFinder<UDataTable> DataTableRef(TEXT("/Script/Engine.DataTable'/Game/GameData/SukCharacterStat.SukCharacterStat'"));
 	if (nullptr != DataTableRef.Object)
 	{
 		const UDataTable* DataTable = DataTableRef.Object;
@@ -21,11 +21,22 @@ USukGameDataManager::USukGameDataManager()
 			CharacterStatTable.Add(*arr[i]);
 		}
 
-		for (int i = 0; i < CharacterStatTable.Num(); ++i)
-		{
-			UE_LOG(LogSukGameDataManager, Error, TEXT("Row %d : Attack Damage : %f, Attack Range : %f"), i,CharacterStatTable[i].AttDamage, CharacterStatTable[i].AttRange);
-		}
+	}
 
+	static ConstructorHelpers::FObjectFinder<UDataTable> GMDataTableRef(TEXT("/Script/Engine.DataTable'/Game/GameData/SukGroundMonsterStat.SukGroundMonsterStat'"));
+	if (nullptr != GMDataTableRef.Object)
+	{
+		const UDataTable* GMDataTable = GMDataTableRef.Object;
+		check(GMDataTable->GetRowMap().Num() > 0);
+
+		TArray<FSukGroundMonsterStat*> arr;
+		GMDataTable->GetAllRows<FSukGroundMonsterStat>(TEXT("GetAllGMRows"), arr);
+
+		for (int i = 0; i < arr.Num(); ++i)
+		{
+			GroundMonsterStatTable.Add(*arr[i]);
+			UE_LOG(LogTemp, Error, TEXT("Att : %f, Range : %f"), GroundMonsterStatTable[i].AttDamage, GroundMonsterStatTable[i].AttRange);
+		}
 	}
 }
 

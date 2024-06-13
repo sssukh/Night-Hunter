@@ -9,6 +9,7 @@
 
 class USukCharacterControlData;
 class UAnimMontage;
+class USukCharacterStatComponent;
 
 UENUM()
 enum class ECharacterControlType : uint8
@@ -37,8 +38,12 @@ public:
 	
 	float DeadEventDelayTime = 5.0f;
 
+	// interaction
+public:
+	virtual void TakeDamage(float InDamage) override;
+
+	virtual void GetExp(float InExp);
 
 public:
-	virtual void TakeDamage();
-
+	TObjectPtr<USukCharacterStatComponent> Stat;
 };

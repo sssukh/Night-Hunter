@@ -66,6 +66,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = WeaponStat)
 	float FireInterval;
 
+	void SetAttackDamage(const float InAttDamage) { AttackDamage = InAttDamage; }
+
 protected:
 
 	FTransform GetTargetingTransform();

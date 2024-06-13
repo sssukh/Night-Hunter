@@ -10,6 +10,8 @@
 #include "SukMonsterBase.generated.h"
 
 
+class USukGroundMonsterStatComponent;
+
 UCLASS()
 class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukMonsterInterface, public ISukGMAnimationInterface
 {
@@ -38,7 +40,7 @@ public:
 	
 
 	// Got Hit
-	virtual void GetDamaged(float inDamage) override;
+	virtual void GetDamaged(float InDamage) override;
 
 	// Dead
 	virtual void SetDead();
@@ -60,6 +62,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
 	TObjectPtr<UAnimMontage> SpawnMontage;
+
+	// Stat
 public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Stat)
 	float AttackSpeed;
@@ -76,4 +80,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
 	float Hp;
 
+
+	//UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Stat)
+	TObjectPtr<USukGroundMonsterStatComponent> Stat;
 };

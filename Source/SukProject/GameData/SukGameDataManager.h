@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "SukCharacterStat.h"
+#include "SukCharacterExp.h"
+#include "SukGroundMonsterStat.h"
+#include "SukFlyingMonsterStat.h"
 #include "SukGameDataManager.generated.h"
 
 #define LEVELUPSTAT 1
@@ -28,11 +31,17 @@ public:
 	// If put level bigger than 2, get Level Up stat
 	FORCEINLINE FSukCharacterStat GetCharacterStat(int32 level) const { return CharacterStatTable.IsValidIndex(level - 1) ? CharacterStatTable[level - 1] : CharacterStatTable[LEVELUPSTAT]; }
 
+	FORCEINLINE FSukGroundMonsterStat GetGroundMonsterStat(int32 level) const { return GroundMonsterStatTable.IsValidIndex(level - 1) ? GroundMonsterStatTable[level - 1] : FSukGroundMonsterStat(); }
 	
 
 
 private:
 	TArray<FSukCharacterStat> CharacterStatTable;
 
-	// Monster Data 2개, Item Data 1개 추가 필요
+	TArray<FSukCharacterExp> CharacterExpTable;
+
+	TArray<FSukGroundMonsterStat> GroundMonsterStatTable;
+
+	TArray<FSukFlyingMonsterStat> FlyingMonsterStatTable;
+
 };

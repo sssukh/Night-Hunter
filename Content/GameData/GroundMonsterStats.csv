@@ -1,0 +1,3 @@
+﻿Name,MaxHp,AttDamage,AttRange,AttSpeed,MovementSpeed,Exp
+Base,40,10,50,1,250,10
+DIffAdd,40,10,0,0,10,10
