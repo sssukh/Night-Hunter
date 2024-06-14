@@ -6,8 +6,9 @@
 #include "AI/SukAIController.h"
 #include "Components/CapsuleComponent.h"
 #include "Physics/SukPhysics.h"
-#include "Interface/SukCharacterAnimInterface.h"
 #include "CharacterStat/SukGroundMonsterStatComponent.h"
+#include "Engine/DamageEvents.h"
+#include "Interface/SukCharacterExpInterface.h"
 
 
 
@@ -103,12 +104,15 @@ void ASukMonsterBase::AttackHitCheck()
 	bool HitDetected = GetWorld()->SweepSingleByChannel(OutHitResult, Start, End, FQuat::Identity, CCHANNEL_SUKACTION, FCollisionShape::MakeSphere(AttRadius), Params);
 	if (HitDetected)
 	{
-		ISukCharacterAnimInterface* CharacterAnimInterface = Cast<ISukCharacterAnimInterface>(OutHitResult.GetActor());
-		if (CharacterAnimInterface)
-		{
-			// 공격 데미지 임의로 50 넣음
-			CharacterAnimInterface->TakeDamage(50.0f);
-		}
+		//ISukCharacterAnimInterface* CharacterAnimInterface = Cast<ISukCharacterAnimInterface>(OutHitResult.GetActor());
+		//if (CharacterAnimInterface)
+		//{
+		//	// 공격 데미지 임의로 50 넣음
+		//	CharacterAnimInterface->TakeDamage(50.0f);
+		//}
+
+		FDamageEvent DamageEvent;
+		OutHitResult.GetActor()->TakeDamage(Stat->MonsterStat.AttDamage, DamageEvent,GetController(),this);
 	}
 
 #if ENABLE_DRAW_DEBUG
@@ -120,9 +124,21 @@ void ASukMonsterBase::AttackHitCheck()
 #endif 
 }
 
-void ASukMonsterBase::GetDamaged(float InDamage)
+
+
+float ASukMonsterBase::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	Stat->ApplyDamage(InDamage);
+	Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+
+	AnimInstance->Montage_Play(HitMontage,2.0f);
+
+	Stat->ApplyDamage(Damage);
+	
+	LastHitter = DamageCauser;
+
+	return Damage;
 }
 
 void ASukMonsterBase::SetDead()
@@ -146,7 +162,12 @@ void ASukMonsterBase::SetDead()
 		}
 	), DeadEventDelayTime, false);
 
-
+	if (nullptr != LastHitBy)
+	{
+		// CharacterDamageInterface 새로 정의해서 LastHitBy를 받아오자.
+		ISukCharacterExpInterface* CharacterExp = Cast<ISukCharacterExpInterface>(LastHitBy->GetPawn());
+		CharacterExp->GetExp(Stat->MonsterStat.Exp);
+	}
 }
 
 void ASukMonsterBase::PlayDeadMontage()

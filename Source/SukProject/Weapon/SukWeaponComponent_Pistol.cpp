@@ -4,8 +4,8 @@
 #include "Weapon/SukWeaponComponent_Pistol.h"
 #include "Player/SukCharacterPlayer.h"
 #include "Kismet/GameplayStatics.h"
-#include "Interface/SukMonsterInterface.h"
 #include "Physics/SukPhysics.h"
+#include "Engine/DamageEvents.h"
 
 
 
@@ -19,7 +19,8 @@ USukWeaponComponent_Pistol::USukWeaponComponent_Pistol()
 
 void USukWeaponComponent_Pistol::StartFire()
 {
-	if (Character == nullptr || Character->GetController() == nullptr)
+	Super::StartFire();
+	if (OwnerCharacter == nullptr || OwnerCharacter->GetController() == nullptr)
 	{
 		return;
 	}
@@ -35,12 +36,13 @@ void USukWeaponComponent_Pistol::StartFire()
 	// Try and play the sound if specified
 	if (FireSound != nullptr)
 	{
-		UGameplayStatics::PlaySoundAtLocation(this, FireSound, Character->GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, FireSound, OwnerCharacter->GetActorLocation());
 	}
 }
 
 void USukWeaponComponent_Pistol::EndFire()
 {
+	Super::EndFire();
 	if (FireTimerHandle.IsValid())
 	{
 		GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
@@ -53,22 +55,17 @@ void USukWeaponComponent_Pistol::FireWithLineTrace()
 
 	const FVector Start = GetTargetingTransform().GetTranslation();
 
-	const FVector End = (Character->GetControlRotation().Vector() * AttackRange) + Start;
+	const FVector End = (OwnerCharacter->GetControlRotation().Vector() * AttackRange) + Start;
 
 	FCollisionQueryParams CollisionParams;
-	CollisionParams.AddIgnoredActor(Character);
+	CollisionParams.AddIgnoredActor(OwnerCharacter);
 
 	bool HitDetected = GetWorld()->LineTraceSingleByChannel(OutHitResult, Start, End, CCHANNEL_SUKACTION, CollisionParams);
 
 	if (HitDetected)
 	{
-		ISukMonsterInterface* MonsterInterface = Cast<ISukMonsterInterface>(OutHitResult.GetActor());
-		if (MonsterInterface == nullptr)
-		{
-			return;
-		}
-
-		MonsterInterface->GetDamaged(AttackDamage);
+		FDamageEvent DamageEvent;
+		OutHitResult.GetActor()->TakeDamage(AttackDamage, DamageEvent, GetCharacterController(), GetOwnerCharacter());
 	}
 
 #if ENABLE_DRAW_DEBUG
@@ -86,7 +83,7 @@ void USukWeaponComponent_Pistol::FireWithLineTrace()
 
 	if (CharacterFireAnimation != nullptr)
 	{
-		UAnimInstance* CharacterAnimInstance = Character->GetMesh()->GetAnimInstance();
+		UAnimInstance* CharacterAnimInstance = OwnerCharacter->GetMesh()->GetAnimInstance();
 		if (CharacterAnimInstance != nullptr)
 		{
 			CharacterAnimInstance->Montage_Play(CharacterFireAnimation, 1.0f);

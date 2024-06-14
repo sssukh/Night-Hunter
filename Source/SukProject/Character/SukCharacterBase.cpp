@@ -82,14 +82,21 @@ void ASukCharacterBase::PlayDeadAnimation()
 	AnimIns->Montage_Play(DeadMontage);
 }
 
-void ASukCharacterBase::TakeDamage(float InDamage)
+
+float ASukCharacterBase::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	Stat->ApplyDamage(InDamage);
+	Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+	Stat->ApplyDamage(Damage);
+
+	CharacterLastHitter = DamageCauser;
+
+	return Damage;
 }
 
 void ASukCharacterBase::GetExp(float InExp)
 {
-
+	Stat->ApplyExp(InExp);
 }
 
 

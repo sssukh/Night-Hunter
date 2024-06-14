@@ -16,7 +16,7 @@ USukWeaponComponent::USukWeaponComponent()
 
 	
 
-	Character = Cast<ASukCharacterPlayer>(GetOwner());
+	OwnerCharacter = Cast<ASukCharacterPlayer>(GetOwner());
 
 	
 }
@@ -39,9 +39,9 @@ void USukWeaponComponent::EndFire()
 
 FTransform USukWeaponComponent::GetTargetingTransform()
 {
-	check(Character);
+	check(OwnerCharacter);
 
-	AController* Controller = Character->Controller;
+	AController* Controller = OwnerCharacter->Controller;
 	if (Controller == nullptr)
 	{
 		return FTransform();

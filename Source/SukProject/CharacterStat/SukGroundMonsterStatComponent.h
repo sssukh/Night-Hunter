@@ -30,6 +30,7 @@ public:
 
 	FORCEINLINE void SetGroundMonsterStat(const FSukGroundMonsterStat& InStat) { MonsterStat = InStat; }
 
+
 public:
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentHp;

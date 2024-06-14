@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/ActorComponent.h"
+#include "Player/SukCharacterPlayer.h"
 #include "SukWeaponComponent.generated.h"
 
 
@@ -32,7 +33,9 @@ public:
 	USukWeaponComponent();
 
 	
+	AController* GetCharacterController() { return OwnerCharacter->GetController(); }
 
+	ASukCharacterPlayer* GetOwnerCharacter() { return OwnerCharacter; }
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<ASukProjectile> ProjectileClass;
@@ -73,5 +76,5 @@ protected:
 	FTransform GetTargetingTransform();
 
 	// Owner
-	TObjectPtr<ASukCharacterPlayer> Character;
+	TObjectPtr<ASukCharacterPlayer> OwnerCharacter;
 };

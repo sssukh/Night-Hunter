@@ -33,12 +33,13 @@ public:
 
 	FORCEINLINE FSukGroundMonsterStat GetGroundMonsterStat(int32 level) const { return GroundMonsterStatTable.IsValidIndex(level - 1) ? GroundMonsterStatTable[level - 1] : FSukGroundMonsterStat(); }
 	
-
+	FORCEINLINE FSukCharacterExp GetCharacterExp() const { return CharacterExpTable; }
 
 private:
 	TArray<FSukCharacterStat> CharacterStatTable;
 
-	TArray<FSukCharacterExp> CharacterExpTable;
+	// row가 하나밖에 없다.
+	FSukCharacterExp CharacterExpTable;
 
 	TArray<FSukGroundMonsterStat> GroundMonsterStatTable;
 

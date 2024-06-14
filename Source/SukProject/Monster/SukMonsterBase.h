@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/SukCharacterAIInterface.h"
-#include "Interface/SukMonsterInterface.h"
 #include "Interface/SukGMAnimationInterface.h"
 #include "SukMonsterBase.generated.h"
 
@@ -13,7 +12,7 @@
 class USukGroundMonsterStatComponent;
 
 UCLASS()
-class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukMonsterInterface, public ISukGMAnimationInterface
+class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukGMAnimationInterface
 {
 	GENERATED_BODY()
 
@@ -40,7 +39,8 @@ public:
 	
 
 	// Got Hit
-	virtual void GetDamaged(float InDamage) override;
+
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)override;
 
 	// Dead
 	virtual void SetDead();
@@ -63,6 +63,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
 	TObjectPtr<UAnimMontage> SpawnMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
+	TObjectPtr<UAnimMontage> HitMontage;
+
 	// Stat
 public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Stat)
@@ -81,6 +84,7 @@ public:
 	float Hp;
 
 
-	//UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Stat)
 	TObjectPtr<USukGroundMonsterStatComponent> Stat;
+
+	TObjectPtr<AActor> LastHitter;
 };

@@ -35,8 +35,21 @@ USukGameDataManager::USukGameDataManager()
 		for (int i = 0; i < arr.Num(); ++i)
 		{
 			GroundMonsterStatTable.Add(*arr[i]);
-			UE_LOG(LogTemp, Error, TEXT("Att : %f, Range : %f"), GroundMonsterStatTable[i].AttDamage, GroundMonsterStatTable[i].AttRange);
 		}
+	}
+
+	static ConstructorHelpers::FObjectFinder<UDataTable> CEDataTableRef(TEXT("/Script/Engine.DataTable'/Game/GameData/SukCharacterExp.SukCharacterExp'"));
+	if (nullptr != CEDataTableRef.Object)
+	{
+		const UDataTable* CEDataTable = CEDataTableRef.Object;
+		check(CEDataTable->GetRowMap().Num() > 0);
+
+		TArray<FSukCharacterExp*> arr;
+		CEDataTable->GetAllRows<FSukCharacterExp>(TEXT("GetAllGMRows"), arr);
+
+		
+		CharacterExpTable = *arr[0];
+		
 	}
 }
 
