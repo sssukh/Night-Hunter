@@ -9,6 +9,8 @@
 #include "CharacterStat/SukGroundMonsterStatComponent.h"
 #include "Engine/DamageEvents.h"
 #include "Interface/SukCharacterExpInterface.h"
+#include "UI/SukHpWidget.h"
+
 
 
 
@@ -32,6 +34,7 @@ ASukMonsterBase::ASukMonsterBase()
 	AttackRange = 100.0f;
 	Hp = 100;
 
+	
 }
 
 void ASukMonsterBase::BeginPlay()

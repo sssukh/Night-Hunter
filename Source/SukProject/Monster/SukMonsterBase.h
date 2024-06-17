@@ -10,6 +10,7 @@
 
 
 class USukGroundMonsterStatComponent;
+class UWidgetComponent;
 
 UCLASS()
 class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukGMAnimationInterface
@@ -87,4 +88,9 @@ public:
 	TObjectPtr<USukGroundMonsterStatComponent> Stat;
 
 	TObjectPtr<AActor> LastHitter;
+
+
+protected:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget,Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UWidgetComponent> HpBar;
 };
