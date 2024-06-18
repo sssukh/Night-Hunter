@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Interface/SukCharacterAIInterface.h"
 #include "Interface/SukGMAnimationInterface.h"
+#include "Interface/MonsterWidgetInterface.h"
 #include "SukMonsterBase.generated.h"
 
 
@@ -13,7 +14,7 @@ class USukGroundMonsterStatComponent;
 class UWidgetComponent;
 
 UCLASS()
-class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukGMAnimationInterface
+class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukGMAnimationInterface, public IMonsterWidgetInterface
 {
 	GENERATED_BODY()
 
@@ -84,13 +85,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
 	float Hp;
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USukGroundMonsterStatComponent> Stat;
 
-	TObjectPtr<AActor> LastHitter;
 
-
+	// Widget
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget,Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UWidgetComponent> HpBar;
+
+	virtual void SetupMonsterWidget(USukUserWidget* InUserWidget) override;
 };

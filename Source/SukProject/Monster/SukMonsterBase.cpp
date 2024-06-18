@@ -9,6 +9,7 @@
 #include "CharacterStat/SukGroundMonsterStatComponent.h"
 #include "Engine/DamageEvents.h"
 #include "Interface/SukCharacterExpInterface.h"
+#include "UI/SukWidgetComponent.h"
 #include "UI/SukHpWidget.h"
 
 
@@ -34,7 +35,20 @@ ASukMonsterBase::ASukMonsterBase()
 	AttackRange = 100.0f;
 	Hp = 100;
 
-	
+	// Widget Component
+	HpBar = CreateDefaultSubobject<USukWidgetComponent>(TEXT("HpBar"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
+	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UI/WBP_MonsterHpHUD.WBP_MonsterHpHUD_C"));
+	if (HpBarWidgetRef.Class)
+	{
+		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
+		HpBar->SetWidgetSpace(EWidgetSpace::Screen);
+		HpBar->SetDrawSize(FVector2D(150.0f, 15.0f));
+		HpBar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+
+	HpBar->SetHiddenInGame(true);
 }
 
 void ASukMonsterBase::BeginPlay()
@@ -138,8 +152,6 @@ float ASukMonsterBase::TakeDamage(float Damage, FDamageEvent const& DamageEvent,
 	AnimInstance->Montage_Play(HitMontage,2.0f);
 
 	Stat->ApplyDamage(Damage);
-	
-	LastHitter = DamageCauser;
 
 	return Damage;
 }
@@ -149,6 +161,8 @@ void ASukMonsterBase::SetDead()
 	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	PlayDeadMontage();
 	SetActorEnableCollision(false);
+
+	HpBar->SetHiddenInGame(true);
 
 	ASukAIController* AIController = Cast<ASukAIController>(GetController());
 	if (AIController)
@@ -208,6 +222,18 @@ void ASukMonsterBase::SetSpawnedMonster(UAnimMontage* TargetMontage, bool IsProp
 {
 	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 	SetActorEnableCollision(true);
+	HpBar->SetHiddenInGame(false);
+}
+
+void ASukMonsterBase::SetupMonsterWidget(USukUserWidget* InUserWidget)
+{
+	USukHpWidget* HpBarWidget = Cast<USukHpWidget>(InUserWidget);
+	if (HpBarWidget)
+	{
+		HpBarWidget->SetMaxHp(Stat->GetMaxHp());
+		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
+		Stat->OnMonsterHpChange.AddUObject(HpBarWidget, &USukHpWidget::UpdateHpBar);
+	}
 }
 
 

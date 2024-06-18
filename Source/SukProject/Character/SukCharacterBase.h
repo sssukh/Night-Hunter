@@ -10,6 +10,7 @@
 class USukCharacterControlData;
 class UAnimMontage;
 class USukCharacterStatComponent;
+class UWidgetComponent;
 
 UENUM()
 enum class ECharacterControlType : uint8
@@ -45,8 +46,12 @@ public:
 	virtual void GetExp(float InExp) override;
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USukCharacterStatComponent> Stat;
 
-protected:
-	TObjectPtr<AActor> CharacterLastHitter;
+
+
+public:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UWidgetComponent> HpBar;
 };

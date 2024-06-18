@@ -6,6 +6,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Physics/SukPhysics.h"
 #include "CharacterStat/SukCharacterStatComponent.h"
+#include "UI/SukWidgetComponent.h"
+#include "UI/SukHpWidget.h"
 
 // Sets default values
 ASukCharacterBase::ASukCharacterBase()
@@ -45,7 +47,10 @@ ASukCharacterBase::ASukCharacterBase()
 		GetMesh()->SetAnimInstanceClass(AnimInstanceMeshRef.Class);
 	}
 
+	// Stat Component
 	Stat = CreateDefaultSubobject<USukCharacterStatComponent>(TEXT("Stat"));
+
+	// HUD와 hpBar는 어떻게 연결할까?
 
 }
 
@@ -88,8 +93,6 @@ float ASukCharacterBase::TakeDamage(float Damage, FDamageEvent const& DamageEven
 	Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 
 	Stat->ApplyDamage(Damage);
-
-	CharacterLastHitter = DamageCauser;
 
 	return Damage;
 }

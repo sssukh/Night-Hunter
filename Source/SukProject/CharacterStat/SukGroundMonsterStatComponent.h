@@ -8,6 +8,7 @@
 #include "SukGroundMonsterStatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnMonsterHpZero);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangeDelegate, float /*CurrentHp*/);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUKPROJECT_API USukGroundMonsterStatComponent : public UActorComponent
@@ -21,6 +22,7 @@ public:
 	virtual void InitializeComponent() override;
 
 	FOnMonsterHpZero OnMonsterHpZero;
+	FOnHpChangeDelegate OnMonsterHpChange;
 
 	void SetLevelStat(int32 InLevel);
 
@@ -29,7 +31,8 @@ public:
 	void ApplyDamage(float InDamage);
 
 	FORCEINLINE void SetGroundMonsterStat(const FSukGroundMonsterStat& InStat) { MonsterStat = InStat; }
-
+	FORCEINLINE float GetMaxHp() { return MonsterStat.MaxHp; }
+	FORCEINLINE float GetCurrentHp() { return CurrentHp; }
 
 public:
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)

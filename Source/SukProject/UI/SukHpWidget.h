@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "SukUserWidget.h"
 #include "SukHpWidget.generated.h"
 
 class UProgressBar;
@@ -12,7 +13,7 @@ class UProgressBar;
  * 
  */
 UCLASS()
-class SUKPROJECT_API USukHpWidget : public UUserWidget
+class SUKPROJECT_API USukHpWidget : public USukUserWidget
 {
 	GENERATED_BODY()
 public:

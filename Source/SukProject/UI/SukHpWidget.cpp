@@ -3,6 +3,7 @@
 
 #include "UI/SukHpWidget.h"
 #include "Components/ProgressBar.h"
+#include "Interface/MonsterWidgetInterface.h"
 
 USukHpWidget::USukHpWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -15,6 +16,11 @@ void USukHpWidget::NativeConstruct()
 
 	HpProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PbHpBar")));
 	ensure(HpProgressBar);
+	IMonsterWidgetInterface* MonsterWidget = Cast<IMonsterWidgetInterface>(OwningActor);
+	if (MonsterWidget)
+	{
+		MonsterWidget->SetupMonsterWidget(this);
+	}
 }
 
 void USukHpWidget::UpdateHpBar(float NewCurrentHp)
