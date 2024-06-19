@@ -7,7 +7,7 @@
 #include "Physics/SukPhysics.h"
 #include "CharacterStat/SukCharacterStatComponent.h"
 #include "UI/SukWidgetComponent.h"
-#include "UI/SukHpWidget.h"
+#include "UI/SukHUDWidget.h"
 
 // Sets default values
 ASukCharacterBase::ASukCharacterBase()
@@ -100,6 +100,21 @@ float ASukCharacterBase::TakeDamage(float Damage, FDamageEvent const& DamageEven
 void ASukCharacterBase::GetExp(float InExp)
 {
 	Stat->ApplyExp(InExp);
+}
+
+void ASukCharacterBase::SetupCharacterHpBar(USukHUDWidget* InHUDWidget)
+{
+	if (InHUDWidget)
+	{
+		InHUDWidget->UpdateHpBar(Stat->GetCurrentHp(),Stat->GetMaxHp());
+
+		Stat->OnHpChanged.AddUObject(InHUDWidget, &USukHUDWidget::UpdateHpBar);
+	}
+}
+
+void ASukCharacterBase::ShotHit()
+{
+
 }
 
 

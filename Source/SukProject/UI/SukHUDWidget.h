@@ -17,7 +17,7 @@ class SUKPROJECT_API USukHUDWidget : public UUserWidget
 public:
 	USukHUDWidget(const FObjectInitializer& ObjectInitializer);
 
-	void UpdateHpBar(float NewCurrentHp);
+	void UpdateHpBar(float InCurrentHp, float InMaxHp);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -25,5 +25,6 @@ protected:
 	UPROPERTY()
 	TObjectPtr<USukHpWidget> HpBar;
 
-
+	UPROPERTY()
+	TObjectPtr<class USukUserWidget> Crosshair;
 };

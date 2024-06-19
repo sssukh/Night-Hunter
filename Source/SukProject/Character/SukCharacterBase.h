@@ -5,12 +5,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/SukCharacterExpInterface.h"
+#include "Interface/SukCharacterHUDInterface.h"
 #include "SukCharacterBase.generated.h"
+
+DECLARE_MULTICAST_DELEGATE(FShotHit);
 
 class USukCharacterControlData;
 class UAnimMontage;
 class USukCharacterStatComponent;
 class UWidgetComponent;
+class USukHUDWidget;
 
 UENUM()
 enum class ECharacterControlType : uint8
@@ -20,7 +24,7 @@ enum class ECharacterControlType : uint8
 };
 
 UCLASS()
-class SUKPROJECT_API ASukCharacterBase : public ACharacter, public ISukCharacterExpInterface
+class SUKPROJECT_API ASukCharacterBase : public ACharacter, public ISukCharacterExpInterface, public ISukCharacterHUDInterface
 {
 	GENERATED_BODY()
 
@@ -50,8 +54,14 @@ public:
 	TObjectPtr<USukCharacterStatComponent> Stat;
 
 
-
+	// UI section
 public:
+	virtual void SetupCharacterHpBar(USukHUDWidget* InHUDWidget) override;
+
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UWidgetComponent> HpBar;
+
+	FShotHit ShotHit;
+
+	virtual void ShotHit();
 };

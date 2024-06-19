@@ -3,7 +3,7 @@
 
 #include "UI/SukHpWidget.h"
 #include "Components/ProgressBar.h"
-#include "Interface/MonsterWidgetInterface.h"
+#include "Interface/ActorHpBarWidgetInterface.h"
 
 USukHpWidget::USukHpWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -16,18 +16,18 @@ void USukHpWidget::NativeConstruct()
 
 	HpProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PbHpBar")));
 	ensure(HpProgressBar);
-	IMonsterWidgetInterface* MonsterWidget = Cast<IMonsterWidgetInterface>(OwningActor);
-	if (MonsterWidget)
+	IActorHpBarWidgetInterface* HpBarWidget = Cast<IActorHpBarWidgetInterface>(OwningActor);
+	if (HpBarWidget)
 	{
-		MonsterWidget->SetupMonsterWidget(this);
+		HpBarWidget->SetupHpBarWidget(this);
 	}
 }
 
-void USukHpWidget::UpdateHpBar(float NewCurrentHp)
+void USukHpWidget::UpdateHpBar(float InCurrentHp, float InMaxHp)
 {
 	ensure(MaxHp > 0.0f);
 	if (HpProgressBar)
 	{
-		HpProgressBar->SetPercent(NewCurrentHp / MaxHp);
+		HpProgressBar->SetPercent(InCurrentHp / InMaxHp);
 	}
 }

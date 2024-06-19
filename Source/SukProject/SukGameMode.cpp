@@ -3,6 +3,7 @@
 
 #include "SukGameMode.h"
 #include "Player/SukCharacterPlayer.h"
+#include "Player/SukPlayerController.h"
 
 ASukGameMode::ASukGameMode()
 {
@@ -11,5 +12,7 @@ ASukGameMode::ASukGameMode()
 	{
 		DefaultPawnClass = ThirdPersonClassRef.Class;
 	}
+
+	PlayerControllerClass = ASukPlayerController::StaticClass();
 	
 }

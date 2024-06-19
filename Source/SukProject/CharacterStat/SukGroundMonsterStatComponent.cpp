@@ -29,7 +29,7 @@ void USukGroundMonsterStatComponent::SetLevelStat(int32 InLevel)
 void USukGroundMonsterStatComponent::SetHp(float InHp)
 {
 	CurrentHp = FMath::Clamp(InHp, 0, MonsterStat.MaxHp);
-	OnMonsterHpChange.Broadcast(CurrentHp);
+	OnMonsterHpChange.Broadcast(CurrentHp,GetMaxHp());
 }
 
 void USukGroundMonsterStatComponent::ApplyDamage(float InDamage)

@@ -3,14 +3,16 @@
 
 #include "UI/SukHUDWidget.h"
 #include "SukHpWidget.h"
+#include "SukUserWidget.h"
+#include "Interface/SukCharacterHUDInterface.h"
 
 USukHUDWidget::USukHUDWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 }
 
-void USukHUDWidget::UpdateHpBar(float NewCurrentHp)
+void USukHUDWidget::UpdateHpBar(float InCurrentHp, float InMaxHp)
 {
-	HpBar->UpdateHpBar(NewCurrentHp);
+	HpBar->UpdateHpBar(InCurrentHp,InMaxHp);
 }
 
 void USukHUDWidget::NativeConstruct()
@@ -18,4 +20,14 @@ void USukHUDWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	HpBar = Cast<USukHpWidget>(GetWidgetFromName(TEXT("WidgetHpBar")));
+	ensure(HpBar);
+
+	Crosshair = Cast<USukUserWidget>(GetWidgetFromName(TEXT("Crosshair")));
+	ensure(Crosshair);
+
+	ISukCharacterHUDInterface* CharacterHUDInterface = Cast<ISukCharacterHUDInterface>(GetOwningPlayerPawn());
+	if (CharacterHUDInterface)
+	{
+		CharacterHUDInterface->SetupCharacterHpBar(this);
+	}
 }

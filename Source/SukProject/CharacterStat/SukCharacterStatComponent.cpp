@@ -7,7 +7,7 @@
 // Sets default values for this component's properties
 USukCharacterStatComponent::USukCharacterStatComponent() : CurrentLevel(1), CurrentHp(0), CurrentExp(0), MaxExp(0), CurrentMoney(0)
 {
-
+	CurrentLevel = 1;
 	bWantsInitializeComponent = true;
 }
 
@@ -16,7 +16,7 @@ void USukCharacterStatComponent::InitializeComponent()
 	Super::InitializeComponent();
 	ExpData = USukGameDataManager::Get().GetCharacterExp();
 	SetLevelStat(CurrentLevel);
-	SetHp(BaseStat.MaxHp);
+	SetHp(GetMaxHp());
 }
 
 void USukCharacterStatComponent::SetLevelStat(int32 InNewLevel)
@@ -26,20 +26,25 @@ void USukCharacterStatComponent::SetLevelStat(int32 InNewLevel)
 	if (CurrentLevel == 1)
 	{
 		MaxExp = ExpData.ExpMax;
+		MaxHp = BaseStat.MaxHp;
 	}
 	
 }
 
 void USukCharacterStatComponent::SetHp(int32 InNewHp)
 {
-	CurrentHp = FMath::Clamp(InNewHp, 0, BaseStat.MaxHp + ModifierStat.MaxHp);
+	CurrentHp = FMath::Clamp(InNewHp, 0, MaxHp + ModifierStat.MaxHp);
+	OnHpChanged.Broadcast(CurrentHp,GetMaxHp());
 }
 
 void USukCharacterStatComponent::LevelUp()
 {
-	SetLevelStat(CurrentLevel + 1);
+	CurrentLevel += 1;
+	AddBaseStat(USukGameDataManager::Get().GetCharacterStat(CurrentLevel));
 	MaxExp = MaxExp * ExpData.ExpIncreaseRate;
+	MaxHp = BaseStat.MaxHp;
 	UE_LOG(LogTemp, Warning, TEXT("Levelup"));
+	OnHpChanged.Broadcast(CurrentHp,GetMaxHp());
 }
 
 

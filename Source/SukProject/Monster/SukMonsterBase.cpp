@@ -39,7 +39,7 @@ ASukMonsterBase::ASukMonsterBase()
 	HpBar = CreateDefaultSubobject<USukWidgetComponent>(TEXT("HpBar"));
 	HpBar->SetupAttachment(GetMesh());
 	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
-	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UI/WBP_MonsterHpHUD.WBP_MonsterHpHUD_C"));
+	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UI/WBP_MonsterHp.WBP_MonsterHp_C"));
 	if (HpBarWidgetRef.Class)
 	{
 		HpBar->SetWidgetClass(HpBarWidgetRef.Class);
@@ -225,13 +225,13 @@ void ASukMonsterBase::SetSpawnedMonster(UAnimMontage* TargetMontage, bool IsProp
 	HpBar->SetHiddenInGame(false);
 }
 
-void ASukMonsterBase::SetupMonsterWidget(USukUserWidget* InUserWidget)
+void ASukMonsterBase::SetupHpBarWidget(USukUserWidget* InUserWidget)
 {
 	USukHpWidget* HpBarWidget = Cast<USukHpWidget>(InUserWidget);
 	if (HpBarWidget)
 	{
 		HpBarWidget->SetMaxHp(Stat->GetMaxHp());
-		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
+		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp(),Stat->GetMaxHp());
 		Stat->OnMonsterHpChange.AddUObject(HpBarWidget, &USukHpWidget::UpdateHpBar);
 	}
 }

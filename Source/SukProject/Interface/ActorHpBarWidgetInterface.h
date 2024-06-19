@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "MonsterWidgetInterface.generated.h"
+#include "ActorHpBarWidgetInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UMonsterWidgetInterface : public UInterface
+class UActorHpBarWidgetInterface : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,10 +16,10 @@ class UMonsterWidgetInterface : public UInterface
 /**
  * 
  */
-class SUKPROJECT_API IMonsterWidgetInterface
+class SUKPROJECT_API IActorHpBarWidgetInterface
 {
 	GENERATED_BODY()
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void SetupMonsterWidget(class USukUserWidget* InUserWidget) = 0;
+	virtual void SetupHpBarWidget(class USukUserWidget* InUserWidget) = 0;
 };

@@ -66,6 +66,7 @@ void USukWeaponComponent_Pistol::FireWithLineTrace()
 	{
 		FDamageEvent DamageEvent;
 		OutHitResult.GetActor()->TakeDamage(AttackDamage, DamageEvent, GetCharacterController(), GetOwnerCharacter());
+		OwnerCharacter->ShotHit();
 	}
 
 #if ENABLE_DRAW_DEBUG

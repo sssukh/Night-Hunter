@@ -8,7 +8,7 @@
 #include "SukGroundMonsterStatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnMonsterHpZero);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangeDelegate, float /*CurrentHp*/);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHpChangeDelegate, float /*CurrentHp*/,float /*MaxHp*/);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUKPROJECT_API USukGroundMonsterStatComponent : public UActorComponent

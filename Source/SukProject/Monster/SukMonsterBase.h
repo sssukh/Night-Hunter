@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Interface/SukCharacterAIInterface.h"
 #include "Interface/SukGMAnimationInterface.h"
-#include "Interface/MonsterWidgetInterface.h"
+#include "Interface/ActorHpBarWidgetInterface.h"
 #include "SukMonsterBase.generated.h"
 
 
@@ -14,7 +14,7 @@ class USukGroundMonsterStatComponent;
 class UWidgetComponent;
 
 UCLASS()
-class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukGMAnimationInterface, public IMonsterWidgetInterface
+class SUKPROJECT_API ASukMonsterBase : public ACharacter, public ISukCharacterAIInterface, public ISukGMAnimationInterface, public IActorHpBarWidgetInterface
 {
 	GENERATED_BODY()
 
@@ -94,5 +94,6 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget,Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UWidgetComponent> HpBar;
 
-	virtual void SetupMonsterWidget(USukUserWidget* InUserWidget) override;
+	virtual void SetupHpBarWidget(USukUserWidget* InUserWidget) override;
+
 };

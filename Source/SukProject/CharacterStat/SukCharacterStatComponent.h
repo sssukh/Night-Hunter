@@ -9,7 +9,7 @@
 #include "SukCharacterStatComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float/*CurrentHp*/);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHpChangedDelegate, float/*CurrentHp*/,float/*MaxHp*/);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUKPROJECT_API USukCharacterStatComponent : public UActorComponent
@@ -41,13 +41,17 @@ public:
 	FORCEINLINE void AddBaseStat(const FSukCharacterStat& InAddBaseStat) { BaseStat = BaseStat + InAddBaseStat; }
 	FORCEINLINE void SetBaseStat(const FSukCharacterStat& InBaseStat) { BaseStat = InBaseStat; }
 	FORCEINLINE const FSukCharacterStat GetStat() { return BaseStat + ModifierStat; }
-	FORCEINLINE float GetMaxHp() { return BaseStat.MaxHp + ModifierStat.MaxHp; }
+	FORCEINLINE float GetMaxHp() { return MaxHp + ModifierStat.MaxHp; }
 	FORCEINLINE const float GetMaxExp() { return MaxExp; }
+	FORCEINLINE const float GetCurrentHp() { return CurrentHp; }
 
 protected:
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentHp;
 	
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
+	float MaxHp;
+
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat)
 	float CurrentExp;
 
