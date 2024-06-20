@@ -32,12 +32,6 @@ void USukWeaponComponent_Pistol::StartFire()
 			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &USukWeaponComponent_Pistol::FireWithLineTrace, FireInterval, true,0.0f);
 	}
 
-
-	// Try and play the sound if specified
-	if (FireSound != nullptr)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, FireSound, OwnerCharacter->GetActorLocation());
-	}
 }
 
 void USukWeaponComponent_Pistol::EndFire()
@@ -67,6 +61,10 @@ void USukWeaponComponent_Pistol::FireWithLineTrace()
 		FDamageEvent DamageEvent;
 		OutHitResult.GetActor()->TakeDamage(AttackDamage, DamageEvent, GetCharacterController(), GetOwnerCharacter());
 		OwnerCharacter->ShotHit();
+		if (HitSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(OutHitResult.GetActor(), HitSound, OutHitResult.GetActor()->GetActorLocation());
+		}
 	}
 
 #if ENABLE_DRAW_DEBUG
@@ -89,6 +87,11 @@ void USukWeaponComponent_Pistol::FireWithLineTrace()
 		{
 			CharacterAnimInstance->Montage_Play(CharacterFireAnimation, 1.0f);
 		}
+	}
+
+	if (FireSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, FireSound, Start);
 	}
 
 }

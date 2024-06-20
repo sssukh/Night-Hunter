@@ -4,6 +4,7 @@
 #include "Player/SukPlayerController.h"
 #include "UI/SukHUDWidget.h"
 
+
 ASukPlayerController::ASukPlayerController()
 {
 	static ConstructorHelpers::FClassFinder<USukHUDWidget> SukHUDWidgetRef(TEXT("/Game/UI/WBP_SukHUDWidget.WBP_SukHUDWidget_C"));
@@ -29,5 +30,6 @@ void ASukPlayerController::BeginPlay()
 	if (SukHUDWidget)
 	{
 		SukHUDWidget->AddToViewport();
+		
 	}
 }

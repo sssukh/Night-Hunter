@@ -8,6 +8,7 @@
 #include "CharacterStat/SukCharacterStatComponent.h"
 #include "UI/SukWidgetComponent.h"
 #include "UI/SukHUDWidget.h"
+#include "Player/SukPlayerController.h"
 
 // Sets default values
 ASukCharacterBase::ASukCharacterBase()
@@ -102,19 +103,21 @@ void ASukCharacterBase::GetExp(float InExp)
 	Stat->ApplyExp(InExp);
 }
 
-void ASukCharacterBase::SetupCharacterHpBar(USukHUDWidget* InHUDWidget)
+void ASukCharacterBase::SetupCharacterHUDWidget(USukHUDWidget* InHUDWidget)
 {
 	if (InHUDWidget)
 	{
 		InHUDWidget->UpdateHpBar(Stat->GetCurrentHp(),Stat->GetMaxHp());
 
 		Stat->OnHpChanged.AddUObject(InHUDWidget, &USukHUDWidget::UpdateHpBar);
+
+		ShotHitDelegate.AddUObject(InHUDWidget, &USukHUDWidget::CrosshairShowHit);
 	}
 }
 
 void ASukCharacterBase::ShotHit()
 {
-
+	ShotHitDelegate.Broadcast();
 }
 
 

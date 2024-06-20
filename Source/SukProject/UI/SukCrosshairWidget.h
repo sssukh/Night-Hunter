@@ -16,6 +16,7 @@ class SUKPROJECT_API USukCrosshairWidget : public USukUserWidget
 public:
 	USukCrosshairWidget(const FObjectInitializer& ObjectInitializer);
 
+	void CrosshairShowHit();
 
 protected:
 	virtual void NativeConstruct() override;
@@ -23,9 +24,10 @@ protected:
 
 protected:
 	UPROPERTY()
-	TObjectPtr<class UImage> MainCrosshair;
+	TObjectPtr<class UImage> MainCrosshairWidget;
 
 	UPROPERTY()
-	TObjectPtr<class UImage> HitCrosshair;
+	TObjectPtr<class UImage> HitCrosshairWidget;
+
 
 };

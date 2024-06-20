@@ -12,9 +12,20 @@ void USukCrosshairWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	MainCrosshair = Cast<UImage>(GetWidgetFromName("MainCrosshair"));
-	ensure(MainCrosshair);
+	MainCrosshairWidget = Cast<UImage>(GetWidgetFromName("MainCrosshair"));
+	ensure(MainCrosshairWidget);
 
-	HitCrosshair = Cast<UImage>(GetWidgetFromName("HitCrosshair"));
-	ensure(HitCrosshair);
+	HitCrosshairWidget = Cast<UImage>(GetWidgetFromName("HitCrosshair"));
+	ensure(HitCrosshairWidget);
+
+	HitCrosshairWidget->SetOpacity(0.0f);
+}
+
+
+
+void USukCrosshairWidget::CrosshairShowHit()
+{
+	// HitCrosshair가 나타났다가 사라진다.
+	UE_LOG(LogTemp, Warning, TEXT("CrossHairShowHit"));
+	HitCrosshairWidget->SetOpacity(1.0f);
 }

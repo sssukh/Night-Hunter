@@ -6,6 +6,8 @@
 #include "Weapon/SukWeaponComponent.h"
 #include "SukWeaponComponent_Pistol.generated.h"
 
+
+
 /**
  * 
  */
@@ -26,4 +28,5 @@ public:
 
 private:
 	FTimerHandle FireTimerHandle;
+
 };

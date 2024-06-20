@@ -56,12 +56,12 @@ public:
 
 	// UI section
 public:
-	virtual void SetupCharacterHpBar(USukHUDWidget* InHUDWidget) override;
+	virtual void SetupCharacterHUDWidget(USukHUDWidget* InHUDWidget) override;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UWidgetComponent> HpBar;
 
-	FShotHit ShotHit;
+	FShotHit ShotHitDelegate;
 
 	virtual void ShotHit();
 };

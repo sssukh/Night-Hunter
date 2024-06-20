@@ -94,6 +94,9 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget,Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UWidgetComponent> HpBar;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UWidgetComponent> HitDamageWidget;
+
 	virtual void SetupHpBarWidget(USukUserWidget* InUserWidget) override;
 
 };

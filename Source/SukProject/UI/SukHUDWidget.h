@@ -19,6 +19,8 @@ public:
 
 	void UpdateHpBar(float InCurrentHp, float InMaxHp);
 
+	void CrosshairShowHit();
+
 protected:
 	virtual void NativeConstruct() override;
 protected:
@@ -26,5 +28,5 @@ protected:
 	TObjectPtr<USukHpWidget> HpBar;
 
 	UPROPERTY()
-	TObjectPtr<class USukUserWidget> Crosshair;
+	TObjectPtr<class USukCrosshairWidget> Crosshair;
 };

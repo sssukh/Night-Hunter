@@ -38,7 +38,7 @@ ASukMonsterBase::ASukMonsterBase()
 	// Widget Component
 	HpBar = CreateDefaultSubobject<USukWidgetComponent>(TEXT("HpBar"));
 	HpBar->SetupAttachment(GetMesh());
-	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
+	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 3.0f));
 	static ConstructorHelpers::FClassFinder<UUserWidget> HpBarWidgetRef(TEXT("/Game/UI/WBP_MonsterHp.WBP_MonsterHp_C"));
 	if (HpBarWidgetRef.Class)
 	{
@@ -49,6 +49,15 @@ ASukMonsterBase::ASukMonsterBase()
 	}
 
 	HpBar->SetHiddenInGame(true);
+
+	HitDamageWidget = CreateDefaultSubobject<USukWidgetComponent>(TEXT("HitDamageWidget"));
+	HitDamageWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 2.0f));
+	/*static ConstructorHelpers::FClassFinder<UUserWidget> HitDamageWidgetRef(TEXT(""));
+	if (HitDamageWidgetRef.Class)
+	{
+
+	}*/
+
 }
 
 void ASukMonsterBase::BeginPlay()
