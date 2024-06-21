@@ -99,4 +99,12 @@ protected:
 
 	virtual void SetupHpBarWidget(USukUserWidget* InUserWidget) override;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = Widget,Meta = (DisplayName = "CreateFloatingDamage"))
+	void K2_CreateDamageWidget(float InDamage);
+
+	void CreateDamageWidget(float InDamage);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UCanvasPanel> DamageCanvas;
+
 };

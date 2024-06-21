@@ -58,8 +58,7 @@ public:
 public:
 	virtual void SetupCharacterHUDWidget(USukHUDWidget* InHUDWidget) override;
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = Widget, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UWidgetComponent> HpBar;
+	
 
 	FShotHit ShotHitDelegate;
 

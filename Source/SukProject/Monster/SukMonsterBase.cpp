@@ -11,6 +11,8 @@
 #include "Interface/SukCharacterExpInterface.h"
 #include "UI/SukWidgetComponent.h"
 #include "UI/SukHpWidget.h"
+#include "Components/CanvasPanel.h"
+#include "UI/SukMonsterCanvasWidget.h"
 
 
 
@@ -50,13 +52,19 @@ ASukMonsterBase::ASukMonsterBase()
 
 	HpBar->SetHiddenInGame(true);
 
-	HitDamageWidget = CreateDefaultSubobject<USukWidgetComponent>(TEXT("HitDamageWidget"));
+
+
+	HitDamageWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HitDamageWidget"));
 	HitDamageWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 2.0f));
-	/*static ConstructorHelpers::FClassFinder<UUserWidget> HitDamageWidgetRef(TEXT(""));
+	HitDamageWidget->SetupAttachment(GetMesh());
+	static ConstructorHelpers::FClassFinder<UUserWidget> HitDamageWidgetRef(TEXT("/Game/UI/WBP_MonsterCanvas.WBP_MonsterCanvas_C"));
 	if (HitDamageWidgetRef.Class)
 	{
-
-	}*/
+		HitDamageWidget->SetWidgetClass(HitDamageWidgetRef.Class);
+		HitDamageWidget->SetWidgetSpace(EWidgetSpace::Screen);
+		HitDamageWidget->SetDrawSize(FVector2D(80.0f, 80.0f));
+		HitDamageWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 
 }
 
@@ -162,6 +170,8 @@ float ASukMonsterBase::TakeDamage(float Damage, FDamageEvent const& DamageEvent,
 
 	Stat->ApplyDamage(Damage);
 
+	CreateDamageWidget(Damage);
+
 	return Damage;
 }
 
@@ -244,6 +254,13 @@ void ASukMonsterBase::SetupHpBarWidget(USukUserWidget* InUserWidget)
 		Stat->OnMonsterHpChange.AddUObject(HpBarWidget, &USukHpWidget::UpdateHpBar);
 	}
 }
+
+void ASukMonsterBase::CreateDamageWidget(float InDamage)
+{
+	K2_CreateDamageWidget(InDamage);
+}
+
+
 
 
 
