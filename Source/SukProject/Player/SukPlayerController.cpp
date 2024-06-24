@@ -12,8 +12,6 @@ ASukPlayerController::ASukPlayerController()
 	{
 		SukHUDWidgetClass = SukHUDWidgetRef.Class;
 	}
-
-	
 }
 
 
@@ -30,6 +28,5 @@ void ASukPlayerController::BeginPlay()
 	if (SukHUDWidget)
 	{
 		SukHUDWidget->AddToViewport();
-		
 	}
 }

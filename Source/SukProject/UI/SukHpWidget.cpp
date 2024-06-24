@@ -28,6 +28,7 @@ void USukHpWidget::UpdateHpBar(float InCurrentHp, float InMaxHp)
 	ensure(MaxHp > 0.0f);
 	if (HpProgressBar)
 	{
+		SetMaxHp(InMaxHp);
 		HpProgressBar->SetPercent(InCurrentHp / InMaxHp);
 	}
 }

@@ -23,10 +23,13 @@ public:
 
 	void FireWithLineTrace();
 
+	FORCEINLINE void SetInterval() { IsInterval = false; }
+
 	UPROPERTY(EditAnywhere, Category = Weapon)
 	EFireType FireType;
 
 private:
 	FTimerHandle FireTimerHandle;
 
+	bool IsInterval;
 };

@@ -28,8 +28,14 @@ void USukWeaponComponent_Pistol::StartFire()
 
 	if (FireType == EFireType::LineTrace)
 	{
-		if(!GetWorld()->GetTimerManager().IsTimerActive(FireTimerHandle))
-			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &USukWeaponComponent_Pistol::FireWithLineTrace, FireInterval, true,0.0f);
+		/*if(!GetWorld()->GetTimerManager().IsTimerActive(FireTimerHandle))
+			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &USukWeaponComponent_Pistol::FireWithLineTrace, FireInterval, true,0.0f);*/
+		if (!GetWorld()->GetTimerManager().IsTimerActive(FireTimerHandle))
+		{
+			FireWithLineTrace();
+			IsInterval = true;
+			GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &USukWeaponComponent_Pistol::SetInterval, FireInterval, false, 1.0f);
+		}
 	}
 
 }
@@ -37,10 +43,10 @@ void USukWeaponComponent_Pistol::StartFire()
 void USukWeaponComponent_Pistol::EndFire()
 {
 	Super::EndFire();
-	if (FireTimerHandle.IsValid())
+	/*if (FireTimerHandle.IsValid())
 	{
 		GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
-	}
+	}*/
 }
 
 void USukWeaponComponent_Pistol::FireWithLineTrace()

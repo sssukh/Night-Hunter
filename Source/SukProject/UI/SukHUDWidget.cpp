@@ -28,6 +28,9 @@ void USukHUDWidget::NativeConstruct()
 	HpBar = Cast<USukHpWidget>(GetWidgetFromName(TEXT("WidgetHpBar")));
 	ensure(HpBar);
 
+	// UpdateHpBar의 ensure를 넘어가기 위한 임시값.
+	HpBar->SetMaxHp(100.0f);
+
 	Crosshair = Cast<USukCrosshairWidget>(GetWidgetFromName(TEXT("WidgetCrosshair")));
 	ensure(Crosshair);
 

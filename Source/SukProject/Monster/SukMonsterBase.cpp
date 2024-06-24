@@ -62,7 +62,7 @@ ASukMonsterBase::ASukMonsterBase()
 	{
 		HitDamageWidget->SetWidgetClass(HitDamageWidgetRef.Class);
 		HitDamageWidget->SetWidgetSpace(EWidgetSpace::Screen);
-		HitDamageWidget->SetDrawSize(FVector2D(80.0f, 80.0f));
+		HitDamageWidget->SetDrawSize(FVector2D(300.0f, 300.0f));
 		HitDamageWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
