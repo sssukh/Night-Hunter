@@ -95,7 +95,7 @@ protected:
 	TObjectPtr<UWidgetComponent> HpBar;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UWidgetComponent> HitDamageWidget;
+	TObjectPtr<UWidgetComponent> HitDamageCanvasWidget;
 
 	virtual void SetupHpBarWidget(USukUserWidget* InUserWidget) override;
 
@@ -104,7 +104,5 @@ protected:
 
 	void CreateDamageWidget(float InDamage);
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TObjectPtr<class UCanvasPanel> DamageCanvas;
 
 };

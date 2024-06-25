@@ -54,16 +54,16 @@ ASukMonsterBase::ASukMonsterBase()
 
 
 
-	HitDamageWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HitDamageWidget"));
-	HitDamageWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 2.0f));
-	HitDamageWidget->SetupAttachment(GetMesh());
+	HitDamageCanvasWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HitDamageWidget"));
+	HitDamageCanvasWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 2.0f));
+	HitDamageCanvasWidget->SetupAttachment(GetMesh());
 	static ConstructorHelpers::FClassFinder<UUserWidget> HitDamageWidgetRef(TEXT("/Game/UI/WBP_MonsterCanvas.WBP_MonsterCanvas_C"));
 	if (HitDamageWidgetRef.Class)
 	{
-		HitDamageWidget->SetWidgetClass(HitDamageWidgetRef.Class);
-		HitDamageWidget->SetWidgetSpace(EWidgetSpace::Screen);
-		HitDamageWidget->SetDrawSize(FVector2D(300.0f, 300.0f));
-		HitDamageWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HitDamageCanvasWidget->SetWidgetClass(HitDamageWidgetRef.Class);
+		HitDamageCanvasWidget->SetWidgetSpace(EWidgetSpace::Screen);
+		HitDamageCanvasWidget->SetDrawSize(FVector2D(300.0f, 300.0f));
+		HitDamageCanvasWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
 }
