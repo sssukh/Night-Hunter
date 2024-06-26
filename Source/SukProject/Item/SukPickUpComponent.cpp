@@ -7,8 +7,9 @@
 
 USukPickUpComponent::USukPickUpComponent()
 {
-	SetSphereRadius(30.0f);
-	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Interaction Widget"));
+	SphereRadius = 80.0f;
+	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("PickUpInteractionWidget"));
+	InteractionWidget->SetupAttachment(GetAttachmentRoot());
 	InteractionWidget->SetRelativeLocation(FVector(0.0f, 2.0f, 0.0f));
 	
 	static ConstructorHelpers::FClassFinder<UUserWidget> InteractionWidgetRef (TEXT("/Game/UI/WBP_InteractionWidget.WBP_InteractionWidget_C"));
@@ -16,7 +17,7 @@ USukPickUpComponent::USukPickUpComponent()
 	{
 		InteractionWidget->SetWidgetClass(InteractionWidgetRef.Class);
 		InteractionWidget->SetWidgetSpace(EWidgetSpace::Screen);
-		InteractionWidget->SetDrawSize(FVector2D(150.0f, 30.0f));
+		InteractionWidget->SetDrawSize(FVector2D(100.0f, 50.0f));
 		InteractionWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
@@ -35,6 +36,7 @@ void USukPickUpComponent::BeginPlay()
 
 void USukPickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if(OtherActor)
 	InteractionWidget->SetHiddenInGame(false);
 }
 

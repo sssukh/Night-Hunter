@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SUKPROJECT_API USukPickUpComponent : public USphereComponent
 {
 	GENERATED_BODY()
