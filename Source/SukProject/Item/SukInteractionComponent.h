@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
-#include "SukPickUpComponent.generated.h"
+#include "SukInteractionComponent.generated.h"
 
 
 
@@ -12,11 +12,11 @@
  * 
  */
 UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class SUKPROJECT_API USukPickUpComponent : public USphereComponent
+class SUKPROJECT_API USukInteractionComponent : public USphereComponent
 {
 	GENERATED_BODY()
 public:
-	USukPickUpComponent();
+	USukInteractionComponent();
 
 protected:
 	virtual void BeginPlay() override;

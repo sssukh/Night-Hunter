@@ -16,6 +16,14 @@ class SUKPROJECT_API USukInteractionWidget : public UUserWidget
 public:
 	USukInteractionWidget(const FObjectInitializer& ObjectInitializer);
 
+	virtual void NativeConstruct() override;
+
+	UFUNCTION(BlueprintCallable)
+	void SetInteractionText(FString InText);
+
+protected:
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Text")
+	TObjectPtr<class UTextBlock> InteractionText;
 
 	
 };

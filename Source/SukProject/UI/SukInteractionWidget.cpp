@@ -2,9 +2,23 @@
 
 
 #include "UI/SukInteractionWidget.h"
+#include "Components/TextBlock.h"
 
 USukInteractionWidget::USukInteractionWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+}
+
+void USukInteractionWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+	InteractionText = Cast<UTextBlock>(GetWidgetFromName("InteractionTB"));
+	ensure(InteractionText);
+}
+
+void USukInteractionWidget::SetInteractionText(FString InText)
+{
+	InteractionText->SetText(FText::FromString(InText));
 }
 
 

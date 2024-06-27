@@ -9,6 +9,8 @@
 #include "UI/SukWidgetComponent.h"
 #include "UI/SukHUDWidget.h"
 #include "Player/SukPlayerController.h"
+#include "EnhancedInputComponent.h"
+
 
 // Sets default values
 ASukCharacterBase::ASukCharacterBase()
@@ -101,6 +103,28 @@ float ASukCharacterBase::TakeDamage(float Damage, FDamageEvent const& DamageEven
 void ASukCharacterBase::GetExp(float InExp)
 {
 	Stat->ApplyExp(InExp);
+}
+
+void ASukCharacterBase::InteractionSetup()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
+		{
+			// EnhancedInputComponent->BindAction(InteractionAction,ETriggerEvent::Triggered,this,)
+		}
+	}
+}
+
+void ASukCharacterBase::InteractionFinish()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
+		{
+			// EnhancedInputComponent->BindAction(InteractionAction,ETriggerEvent::Triggered,this,)
+		}
+	}
 }
 
 void ASukCharacterBase::SetupCharacterHUDWidget(USukHUDWidget* InHUDWidget)
