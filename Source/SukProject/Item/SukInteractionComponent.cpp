@@ -55,3 +55,10 @@ void USukInteractionComponent::OnSphereEndOverlap(UPrimitiveComponent* Overlappe
 	}
 
 }
+
+void USukInteractionComponent::Interaction()
+{
+	// 아이템의 경우 능력이나 능력치 얻기
+	
+	// 상자의 경우 아이템 꺼내기
+}

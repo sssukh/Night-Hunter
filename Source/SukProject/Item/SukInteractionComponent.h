@@ -27,6 +27,8 @@ protected:
 	UFUNCTION()
 	void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UFUNCTION()
+	void Interaction();
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UWidgetComponent> InteractionWidget;
