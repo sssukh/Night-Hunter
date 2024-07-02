@@ -107,24 +107,12 @@ void ASukCharacterBase::GetExp(float InExp)
 
 void ASukCharacterBase::InteractionSetup()
 {
-	if (APlayerController* PC = Cast<APlayerController>(GetController()))
-	{
-		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
-		{
-			// EnhancedInputComponent->BindAction(InteractionAction,ETriggerEvent::Triggered,this,)
-		}
-	}
+	
 }
 
 void ASukCharacterBase::InteractionFinish()
 {
-	if (APlayerController* PC = Cast<APlayerController>(GetController()))
-	{
-		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
-		{
-			// EnhancedInputComponent->BindAction(InteractionAction,ETriggerEvent::Triggered,this,)
-		}
-	}
+	
 }
 
 void ASukCharacterBase::SetupCharacterHUDWidget(USukHUDWidget* InHUDWidget)

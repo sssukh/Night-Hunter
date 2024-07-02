@@ -38,6 +38,7 @@ public:
 	UFUNCTION()
 	void OpenChest();
 
+	UFUNCTION(BlueprintCallable)
 	void PlayOpenAnimation();
 
 	bool IsOpened;
