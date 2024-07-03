@@ -35,7 +35,7 @@ void ASukChest::PostInitializeComponents()
 
 void ASukChest::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
 {
-	PlayOpenAnimation();
+	
 }
 
 void ASukChest::OpenChest()
@@ -52,6 +52,11 @@ void ASukChest::PlayOpenAnimation()
 
 		IsOpened = true;
 	}
+}
+
+void ASukChest::OwnerInteraction()
+{
+	PlayOpenAnimation();
 }
 
 

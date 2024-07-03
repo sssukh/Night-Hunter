@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "Interface/SukCharacterExpInterface.h"
 #include "Interface/SukCharacterHUDInterface.h"
-#include "Interface/SukInteractionSetupInterface.h"
 #include "SukCharacterBase.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FShotHit);
@@ -25,7 +24,7 @@ enum class ECharacterControlType : uint8
 };
 
 UCLASS()
-class SUKPROJECT_API ASukCharacterBase : public ACharacter, public ISukCharacterExpInterface, public ISukCharacterHUDInterface, public ISukInteractionSetupInterface
+class SUKPROJECT_API ASukCharacterBase : public ACharacter, public ISukCharacterExpInterface, public ISukCharacterHUDInterface
 {
 	GENERATED_BODY()
 
@@ -50,9 +49,7 @@ public:
 
 	virtual void GetExp(float InExp) override;
 
-	// Interaction Interface
-	virtual void InteractionSetup() override;
-	virtual void InteractionFinish() override;
+	
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USukCharacterStatComponent> Stat;

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interface/SukActorInteractionInterface.h"
 #include "SukChest.generated.h"
 
 class USkeletaMeshComponent;
@@ -11,7 +12,7 @@ class UBoxComponent;
 class AnimMontage;
 
 UCLASS()
-class SUKPROJECT_API ASukChest : public AActor
+class SUKPROJECT_API ASukChest : public AActor, public ISukActorInteractionInterface
 {
 	GENERATED_BODY()
 	
@@ -42,4 +43,8 @@ public:
 	void PlayOpenAnimation();
 
 	bool IsOpened;
+
+	virtual void OwnerInteraction() override;
+
+	
 };

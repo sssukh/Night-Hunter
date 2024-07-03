@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "SukInteractionSetupInterface.generated.h"
+#include "SukActorInteractionInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class USukInteractionSetupInterface : public UInterface
+class USukActorInteractionInterface : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,12 +16,11 @@ class USukInteractionSetupInterface : public UInterface
 /**
  * 
  */
-class SUKPROJECT_API ISukInteractionSetupInterface
+class SUKPROJECT_API ISukActorInteractionInterface
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void InteractionSetup() = 0;
-	virtual void InteractionFinish() = 0;
+	virtual void OwnerInteraction() = 0;
 };

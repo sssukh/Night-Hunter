@@ -105,15 +105,7 @@ void ASukCharacterBase::GetExp(float InExp)
 	Stat->ApplyExp(InExp);
 }
 
-void ASukCharacterBase::InteractionSetup()
-{
-	
-}
 
-void ASukCharacterBase::InteractionFinish()
-{
-	
-}
 
 void ASukCharacterBase::SetupCharacterHUDWidget(USukHUDWidget* InHUDWidget)
 {

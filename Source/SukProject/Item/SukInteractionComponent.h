@@ -22,6 +22,7 @@ public:
 	/*UFUNCTION(BlueprintImplementableEvent, Category = Interaction_Call, Meta = (DisplayName = "Interaction_Cpp"))
 	void K2_Interaction();*/
 
+	FORCEINLINE AActor* GetActor() { return Owner; }
 protected:
 	virtual void BeginPlay() override;
 
@@ -42,5 +43,6 @@ protected:
 
 	int32 InteractionBindingIndex;
 
-	
+	UPROPERTY()
+	TObjectPtr<AActor> Owner;
 };
