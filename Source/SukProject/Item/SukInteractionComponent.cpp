@@ -10,10 +10,13 @@
 
 USukInteractionComponent::USukInteractionComponent()
 {
+	// TODO : Work around the 'Template Mismatch during attachment. Attaching instanced component to template component.' Problem
+
 	SphereRadius = 80.0f;
 	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("PickUpInteractionWidget"));
-	InteractionWidget->SetupAttachment(GetAttachmentRoot());
-	InteractionWidget->SetRelativeLocation(FVector(0.0f, 2.0f, 0.0f));
+	// InteractionWidget->SetupAttachment(GetAttachmentRoot());
+	//InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
+
 	
 	Owner = GetAttachParentActor();
 
@@ -28,6 +31,12 @@ USukInteractionComponent::USukInteractionComponent()
 
 	InteractionWidget->SetHiddenInGame(true);
 
+	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_Interaction.IA_Interaction'"));
+	if (InteractionActionRef.Object)
+	{
+		InteractionAction = InteractionActionRef.Object;
+	}
+
 }
 
 void USukInteractionComponent::BeginPlay()
@@ -38,6 +47,15 @@ void USukInteractionComponent::BeginPlay()
 	OnComponentBeginOverlap.AddDynamic(this, &USukInteractionComponent::OnSphereBeginOverlap);
 
 	OnComponentEndOverlap.AddDynamic(this, &USukInteractionComponent::OnSphereEndOverlap);
+}
+
+void USukInteractionComponent::OnRegister()
+{
+	Super::OnRegister();
+
+	InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
+	InteractionWidget->SetRelativeLocation(FVector(0.0f, 2.0f, 0.0f));
+
 }
 
 // 캐릭터가 범위 안으로 들어오면서 Input을 바인드한다.

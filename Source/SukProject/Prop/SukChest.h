@@ -47,4 +47,9 @@ public:
 	virtual void OwnerInteraction() override;
 
 	
+
+protected:
+
+	UPROPERTY()
+	TObjectPtr<class USukInteractionComponent> ChestInteractionComponent;
 };

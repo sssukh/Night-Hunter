@@ -19,12 +19,13 @@ class SUKPROJECT_API USukInteractionComponent : public USphereComponent
 public:
 	USukInteractionComponent();
 
-	/*UFUNCTION(BlueprintImplementableEvent, Category = Interaction_Call, Meta = (DisplayName = "Interaction_Cpp"))
-	void K2_Interaction();*/
+	FORCEINLINE void SetOwner(AActor* InOwner) { Owner = InOwner; }
 
-	FORCEINLINE AActor* GetActor() { return Owner; }
+	FORCEINLINE AActor* GetOwner() { return Owner; }
 protected:
 	virtual void BeginPlay() override;
+
+	virtual void OnRegister() override;
 
 	UFUNCTION()
 	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,bool bFromSweep, const FHitResult& SweepResult);

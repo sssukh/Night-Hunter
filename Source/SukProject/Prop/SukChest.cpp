@@ -4,6 +4,7 @@
 #include "Prop/SukChest.h"
 #include "Components/BoxComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Item/SukInteractionComponent.h"
 #include "Physics/SukPhysics.h"
 
 
@@ -23,6 +24,12 @@ ASukChest::ASukChest()
 	Mesh->SetCollisionProfileName(TEXT("BlockAllDynamic"));
 
 	IsOpened = false;
+
+	ChestInteractionComponent = CreateDefaultSubobject<USukInteractionComponent>(TEXT("InteractionComponent"));
+	ChestInteractionComponent->SetupAttachment(RootComponent);
+	ChestInteractionComponent->SetOwner(this);
+	ChestInteractionComponent->SetSphereRadius(140.0f);
+
 }
 
 void ASukChest::PostInitializeComponents()
@@ -35,7 +42,7 @@ void ASukChest::PostInitializeComponents()
 
 void ASukChest::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
 {
-	
+	PlayOpenAnimation();
 }
 
 void ASukChest::OpenChest()
