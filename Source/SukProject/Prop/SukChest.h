@@ -20,7 +20,8 @@ public:
 	// Sets default values for this actor's properties
 	ASukChest();
 
-	FORCEINLINE UBoxComponent* GetTrigger() { return Trigger; }
+	virtual void SetInteractionComponentOwner(AActor* InOwner) override; 
+
 
 	virtual void PostInitializeComponents() override;
 
@@ -33,8 +34,6 @@ public:
 	UPROPERTY(EditAnywhere,Category = Montage)
 	TObjectPtr<UAnimMontage> OpenMontage;
 
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult);
 
 	UFUNCTION()
 	void OpenChest();
@@ -45,6 +44,7 @@ public:
 	bool IsOpened;
 
 	virtual void OwnerInteraction() override;
+
 
 	
 
