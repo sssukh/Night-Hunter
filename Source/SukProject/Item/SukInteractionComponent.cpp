@@ -10,8 +10,7 @@
 
 USukInteractionComponent::USukInteractionComponent()
 {
-	// TODO : Work around the 'Template Mismatch during attachment. Attaching instanced component to template component.' Problem
-
+	
 	SphereRadius = 80.0f;
 	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("PickUpInteractionWidget"));
 	// InteractionWidget->SetupAttachment(GetAttachmentRoot());
@@ -95,8 +94,6 @@ void USukInteractionComponent::OnSphereEndOverlap(UPrimitiveComponent* Overlappe
 		{
 			if (APlayerController* PC = Cast<APlayerController>(playerPawn->GetController()))
 			{
-				// UEnhancedInput 헤더 필요함.
-				// Interaction 바인드하면 될것같긴하다.
 				if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
 				{
 					if (EnhancedInputComponent->RemoveActionEventBinding(InteractionBindingIndex))
