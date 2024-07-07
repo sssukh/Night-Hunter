@@ -26,7 +26,7 @@ public:
 	virtual void PostInitializeComponents() override;
 
 	UPROPERTY(VisibleAnywhere,Category=Chest)
-	TObjectPtr<UBoxComponent> Trigger;
+	TObjectPtr<UBoxComponent> Box;
 
 	UPROPERTY(EditAnywhere,Category = Chest)
 	TObjectPtr<USkeletalMeshComponent> Mesh;

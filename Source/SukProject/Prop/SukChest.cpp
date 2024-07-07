@@ -12,10 +12,10 @@
 // Sets default values
 ASukChest::ASukChest()
 {
-	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
+	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 
-	RootComponent = Trigger;
+	RootComponent = Box;
 	Mesh->SetupAttachment(RootComponent);
 
 	Mesh->SetCollisionProfileName(TEXT("BlockAllDynamic"));
@@ -25,7 +25,6 @@ ASukChest::ASukChest()
 	ChestInteractionComponent = CreateDefaultSubobject<USukInteractionComponent>(TEXT("InteractionComponent"));
 	ChestInteractionComponent->SetupAttachment(RootComponent);
 	ChestInteractionComponent->SetSphereRadius(140.0f);
-
 }
 
 void ASukChest::SetInteractionComponentOwner(AActor* InOwner)

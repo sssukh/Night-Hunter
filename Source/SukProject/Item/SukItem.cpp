@@ -13,8 +13,9 @@ ASukItem::ASukItem()
 	InteractionComponent->SetSphereRadius(100.0f);
 	RootComponent = InteractionComponent;
 
-	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	ItemMesh->SetupAttachment(RootComponent);
+	FTransform meshTransform;
+	
+
 	PrimaryActorTick.bCanEverTick = true;
 
 	TurnRate = 10.0f;

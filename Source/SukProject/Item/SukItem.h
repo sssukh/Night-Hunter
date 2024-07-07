@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Interface/SukActorInteractionInterface.h"
+#include "GameData/SukCharacterStat.h"
 #include "SukItem.generated.h"
 
 UCLASS()
@@ -16,8 +17,6 @@ public:
 	// Sets default values for this actor's properties
 	ASukItem();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
-	TObjectPtr<UStaticMeshComponent> ItemMesh;
 
 protected:
 	virtual void PostInitializeComponents() override;
@@ -26,9 +25,14 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
-	
+	UPROPERTY(EditAnywhere, Category = Mesh)
+	TObjectPtr<UStaticMeshComponent> ItemMesh;
+
 	UPROPERTY()
 	TObjectPtr<class USukInteractionComponent> InteractionComponent;
+
+	UPROPERTY()
+	FSukCharacterStat UpgradeCharacterStat;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float TurnRate;
