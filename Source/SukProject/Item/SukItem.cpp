@@ -7,14 +7,9 @@
 // Sets default values
 ASukItem::ASukItem()
 {
-	
-
 	InteractionComponent=CreateDefaultSubobject<USukInteractionComponent>(TEXT("ItemInteractionComponent"));
 	InteractionComponent->SetSphereRadius(100.0f);
 	RootComponent = InteractionComponent;
-
-	FTransform meshTransform;
-	
 
 	PrimaryActorTick.bCanEverTick = true;
 
