@@ -5,27 +5,33 @@
 #include "SukItem.h"
 
 // Sets default values for this component's properties
-USukInventoryManagerComponent::USukInventoryManagerComponent()
+
+
+USukInventoryManagerComponent::USukInventoryManagerComponent(const FObjectInitializer& ObjectInitializer)
+	:Super(ObjectInitializer)
+	, InventoryList(this)
 {
-	
-	// ...
 }
 
-USukItem* USukInventoryManagerComponent::AddItem(TSubclassOf<USukItem> InItem)
+USukItemDefinition* USukInventoryManagerComponent::AddItem(TSubclassOf<class USukItemDefinition> InItem)
 {
-	USukItem* Item = nullptr;
-
-	return nullptr;
+	USukItemDefinition* Result = nullptr;
+	if (InItem)
+	{
+		Result = InventoryList.AddEntry(InItem);
+	}
+	return Result;
 }
 
-USukItem* FInventoryList::AddEntry(TSubclassOf<USukItem> InItem)
+
+
+USukItemDefinition* FInventoryList::AddEntry(TSubclassOf<USukItemDefinition> InItem)
 {
-	USukItem* Item = nullptr;
 
 	AActor* OwningActor = OwnerComponent->GetOwner();
 
 	FInventoryEntry& NewEntry = Entries.AddDefaulted_GetRef();
-	NewEntry.Instance = NewObject<USukItem>(OwningActor);
-
+	NewEntry.Instance = NewObject<USukItemDefinition>(OwningActor);
+	// NewEntry.Instance = InItem;
 	return nullptr;
 }

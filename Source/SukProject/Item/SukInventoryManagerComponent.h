@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "SukInventoryManagerComponent.generated.h"
 
-class USukItem;
+class USukItemDefinition;
 
 USTRUCT()
 struct FInventoryEntry
@@ -14,7 +14,10 @@ struct FInventoryEntry
 	GENERATED_BODY()
 	
 	UPROPERTY()
-	TObjectPtr<USukItem> Instance = nullptr;
+	TObjectPtr<class USukItemDefinition> Instance = nullptr;
+
+	UPROPERTY()
+	uint8 qty;
 };
 
 USTRUCT()
@@ -25,10 +28,11 @@ struct FInventoryList
 	FInventoryList(UActorComponent* InOwnerComponent=nullptr) : OwnerComponent(InOwnerComponent)
 	{}
 
-	USukItem* AddEntry(TSubclassOf<USukItem> InItem);
+	USukItemDefinition* AddEntry(TSubclassOf<USukItemDefinition> InItem);
 
 	UPROPERTY()
 	TArray<FInventoryEntry> Entries;
+
 	UPROPERTY()
 	TObjectPtr<UActorComponent> OwnerComponent;
 };
@@ -40,10 +44,10 @@ class SUKPROJECT_API USukInventoryManagerComponent : public UActorComponent
 
 public:	
 	// Sets default values for this component's properties
-	USukInventoryManagerComponent();
+	USukInventoryManagerComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	UFUNCTION()
-	USukItem* AddItem(TSubclassOf<USukItem> InItem);
+	USukItemDefinition* AddItem(TSubclassOf<class USukItemDefinition> InItem);
 
 	UPROPERTY()
 	FInventoryList InventoryList;
