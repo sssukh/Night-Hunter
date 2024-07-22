@@ -8,16 +8,7 @@
 #include "GameData/SukCharacterStat.h"
 #include "SukItem.generated.h"
 
-USTRUCT()
-struct FItemEntry
-{
-	GENERATED_BODY()
-	
-	UPROPERTY()
-	TSubclassOf<class ASukItem> ItemInstance;
 
-	int qty = 0;
-};
 
 UCLASS()
 class SUKPROJECT_API ASukItem : public AActor, public ISukActorInteractionInterface

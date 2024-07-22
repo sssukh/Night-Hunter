@@ -24,9 +24,9 @@ void ASukPlayerController::BeginPlay()
 	FInputModeGameOnly GameOnlyInputMode;
 	SetInputMode(GameOnlyInputMode);
 
-	SukHUDWidget = CreateWidget<USukHUDWidget>(this, SukHUDWidgetClass);
+	/*SukHUDWidget = CreateWidget<USukHUDWidget>(this, SukHUDWidgetClass);
 	if (SukHUDWidget)
 	{
 		SukHUDWidget->AddToViewport();
-	}
+	}*/
 }
