@@ -29,4 +29,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HUD)
 	TObjectPtr<USukHUDWidget> SukHUDWidget;
+
+
 };

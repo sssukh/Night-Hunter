@@ -22,6 +22,8 @@ public:
 	FORCEINLINE void SetOwner(AActor* InOwner) { Owner = InOwner; }
 
 	FORCEINLINE AActor* GetOwner() { return Owner; }
+
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -35,9 +37,12 @@ protected:
 
 	UFUNCTION()
 	void Interaction();
+
+
+
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UWidgetComponent> InteractionWidget;
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UWidgetComponent> InteractionWidget;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InteractionAction;

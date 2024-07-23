@@ -7,12 +7,12 @@
 
 ASukGameMode::ASukGameMode()
 {
-	static ConstructorHelpers::FClassFinder<APawn> ThirdPersonClassRef(TEXT("/Game/Blueprints/BP_SukCharacterPlayer.BP_SukCharacterPlayer_C"));
+	/*static ConstructorHelpers::FClassFinder<APawn> ThirdPersonClassRef(TEXT("Game/Blueprints/Characters/BP_SukCharacterPlayer.BP_SukCharacterPlayer_C"));
 	if (ThirdPersonClassRef.Class)
 	{
 		DefaultPawnClass = ThirdPersonClassRef.Class;
 	}
 
-	PlayerControllerClass = ASukPlayerController::StaticClass();
+	PlayerControllerClass = ASukPlayerController::StaticClass();*/
 	
 }

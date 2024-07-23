@@ -46,10 +46,12 @@ public:
 	virtual void OwnerInteraction() override;
 
 
-	
+	// Action will be defined by Blueprint
+	UFUNCTION(BlueprintImplementableEvent, Category = Interaction, Meta = (DisplayName = "ChestOpened"))
+	void K2_AfterChestOpen();
 
 protected:
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TObjectPtr<class USukInteractionComponent> ChestInteractionComponent;
 };

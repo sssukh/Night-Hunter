@@ -12,23 +12,23 @@ USukInteractionComponent::USukInteractionComponent()
 {
 	
 	SphereRadius = 80.0f;
-	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("PickUpInteractionWidget"));
+	//InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("PickUpInteractionWidget"));
 	// InteractionWidget->SetupAttachment(GetAttachmentRoot());
 	//InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
 
 	
 	Owner = GetAttachParentActor();
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> InteractionWidgetRef (TEXT("/Game/UI/WBP_InteractionWidget.WBP_InteractionWidget_C"));
-	if (InteractionWidgetRef.Class)
-	{
-		InteractionWidget->SetWidgetClass(InteractionWidgetRef.Class);
-		InteractionWidget->SetWidgetSpace(EWidgetSpace::Screen);
-		InteractionWidget->SetDrawSize(FVector2D(100.0f, 50.0f));
-		InteractionWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	}
+	//static ConstructorHelpers::FClassFinder<UUserWidget> InteractionWidgetRef (TEXT("/Game/UI/WBP_InteractionWidget.WBP_InteractionWidget_C"));
+	//if (InteractionWidgetRef.Class)
+	//{
+	//	InteractionWidget->SetWidgetClass(InteractionWidgetRef.Class);
+	//	InteractionWidget->SetWidgetSpace(EWidgetSpace::Screen);
+	//	InteractionWidget->SetDrawSize(FVector2D(100.0f, 50.0f));
+	//	InteractionWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	//}
 
-	InteractionWidget->SetHiddenInGame(true);
+	//InteractionWidget->SetHiddenInGame(true);
 
 	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_Interaction.IA_Interaction'"));
 	if (InteractionActionRef.Object)
@@ -52,8 +52,8 @@ void USukInteractionComponent::OnRegister()
 {
 	Super::OnRegister();
 
-	InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
-	InteractionWidget->SetRelativeLocation(FVector(0.0f, 2.0f, 0.0f));
+	/*InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
+	InteractionWidget->SetRelativeLocation(FVector(0.0f, 2.0f, 0.0f));*/
 
 }
 
@@ -63,7 +63,7 @@ void USukInteractionComponent::OnSphereBeginOverlap(UPrimitiveComponent* Overlap
 	ASukCharacterBase* OverlappingActor = Cast<ASukCharacterBase>(OtherActor);
 	if (OverlappingActor)
 	{
-		InteractionWidget->SetHiddenInGame(false);
+		//InteractionWidget->SetHiddenInGame(false);
 
 		APawn* playerPawn = Cast<APawn>(OtherActor);
 		if (playerPawn)
@@ -87,7 +87,7 @@ void USukInteractionComponent::OnSphereEndOverlap(UPrimitiveComponent* Overlappe
 	ASukCharacterBase* OverlappingActor = Cast<ASukCharacterBase>(OtherActor);
 	if (OverlappingActor)
 	{
-		InteractionWidget->SetHiddenInGame(true);
+		//InteractionWidget->SetHiddenInGame(true);
 
 		APawn* playerPawn = Cast<APawn>(OtherActor);
 		if (playerPawn)
@@ -116,6 +116,8 @@ void USukInteractionComponent::Interaction()
 	{
 		ActorInteraction->OwnerInteraction();
 	}
+
+
 	// 상자의 경우 아이템 꺼내기
 	UE_LOG(LogTemp, Warning, TEXT("Interaction"));
 
