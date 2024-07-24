@@ -50,8 +50,13 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = Interaction, Meta = (DisplayName = "ChestOpened"))
 	void K2_AfterChestOpen();
 
+	void CreateItemInBox(UAnimMontage* InMontage, bool bInterrupted);
+
 protected:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TObjectPtr<class USukInteractionComponent> ChestInteractionComponent;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Item)
+	TSubclassOf<class ASukPickup> ItemPickup;
 };

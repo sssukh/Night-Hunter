@@ -7,6 +7,7 @@
 #include "Item/SukInteractionComponent.h"
 #include "Physics/SukPhysics.h"
 #include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 
 
 // Sets default values
@@ -41,7 +42,7 @@ void ASukChest::PostInitializeComponents()
 
 void ASukChest::OpenChest()
 {
-
+	PlayOpenAnimation();
 }
 
 void ASukChest::PlayOpenAnimation()
@@ -52,6 +53,11 @@ void ASukChest::PlayOpenAnimation()
 		if (AnimInstance)
 		{
 			AnimInstance->Montage_Play(OpenMontage, 1.5f);
+
+			/*FOnMontageEnded ChestOpenEnded;
+			ChestOpenEnded.BindUObject(this, &ASukChest::CreateItemInBox);
+
+			AnimInstance->Montage_SetEndDelegate(ChestOpenEnded, OpenMontage);*/
 		}
 
 		IsOpened = true;
@@ -60,8 +66,15 @@ void ASukChest::PlayOpenAnimation()
 
 void ASukChest::OwnerInteraction()
 {
-	PlayOpenAnimation();
+	OpenChest();
 }
+
+void ASukChest::CreateItemInBox(UAnimMontage* InMontage, bool bInterrupted)
+{
+	K2_AfterChestOpen();
+}
+
+
 
 
 
