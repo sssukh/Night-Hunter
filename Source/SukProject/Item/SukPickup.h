@@ -30,4 +30,8 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TObjectPtr<class USukInteractionComponent> InteractionComponent;
 
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	TObjectPtr<class USukItemInstance> Itemcpp;
+
 };

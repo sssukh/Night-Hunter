@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Item/SukItemInstance.h"
 #include "SukPlayerController.generated.h"
 
 class USukUserWidget;
@@ -18,6 +19,8 @@ class SUKPROJECT_API ASukPlayerController : public APlayerController
 public:
 	ASukPlayerController();
 
+	UFUNCTION(BlueprintCallable)
+	void AddItem(USukItemInstance* InItem);
 
 protected:
 	virtual void BeginPlay() override;
@@ -30,5 +33,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = HUD)
 	TObjectPtr<USukHUDWidget> SukHUDWidget;
 
-
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	TArray<FItemEntry> ItemList;
 };

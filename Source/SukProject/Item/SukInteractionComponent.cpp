@@ -63,6 +63,7 @@ void USukInteractionComponent::OnSphereBeginOverlap(UPrimitiveComponent* Overlap
 	ASukCharacterBase* OverlappingActor = Cast<ASukCharacterBase>(OtherActor);
 	if (OverlappingActor)
 	{
+		InRangedActor = OverlappingActor;
 		//InteractionWidget->SetHiddenInGame(false);
 
 		APawn* playerPawn = Cast<APawn>(OtherActor);

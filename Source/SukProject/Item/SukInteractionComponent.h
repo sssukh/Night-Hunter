@@ -23,6 +23,7 @@ public:
 
 	FORCEINLINE AActor* GetOwner() { return Owner; }
 
+	FORCEINLINE class ASukCharacterBase* GetRangedActor() { return InRangedActor; }
 	
 protected:
 	virtual void BeginPlay() override;
@@ -48,6 +49,9 @@ protected:
 	class UInputAction* InteractionAction;
 
 	int32 InteractionBindingIndex;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<class ASukCharacterBase> InRangedActor;
 
 	UPROPERTY()
 	TObjectPtr<AActor> Owner;
