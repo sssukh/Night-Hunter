@@ -6,6 +6,7 @@
 
 USukInteractionWidget::USukInteractionWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+	
 }
 
 void USukInteractionWidget::NativeConstruct()
@@ -14,6 +15,13 @@ void USukInteractionWidget::NativeConstruct()
 
 	InteractionText = Cast<UTextBlock>(GetWidgetFromName("InteractionTB"));
 	ensure(InteractionText);
+
+}
+
+void USukInteractionWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
 }
 
 void USukInteractionWidget::SetInteractionText(FString InText)

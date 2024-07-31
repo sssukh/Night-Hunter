@@ -42,8 +42,8 @@ protected:
 
 
 protected:
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UWidgetComponent> InteractionWidget;*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UWidgetComponent> InteractionWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InteractionAction;
@@ -52,6 +52,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class ASukCharacterBase> InRangedActor;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	TObjectPtr<UUserWidget> WidgetInstance;
 
 	UPROPERTY()
 	TObjectPtr<AActor> Owner;

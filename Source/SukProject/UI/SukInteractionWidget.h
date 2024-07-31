@@ -18,12 +18,17 @@ public:
 
 	virtual void NativeConstruct() override;
 
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+
+
 	UFUNCTION(BlueprintCallable)
 	void SetInteractionText(FString InText);
 
 protected:
-	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Text")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Text)
 	TObjectPtr<class UTextBlock> InteractionText;
 
-	
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Image)
+	TObjectPtr<class UImage> InteractionImage;
 };

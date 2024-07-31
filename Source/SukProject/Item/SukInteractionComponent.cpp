@@ -12,23 +12,22 @@ USukInteractionComponent::USukInteractionComponent()
 {
 	
 	SphereRadius = 80.0f;
-	//InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("PickUpInteractionWidget"));
-	// InteractionWidget->SetupAttachment(GetAttachmentRoot());
-	//InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
 
 	
 	Owner = GetAttachParentActor();
+	
+	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("InteractionWidgetCpp"));
+	InteractionWidget->SetupAttachment(GetAttachmentRoot());
+	static ConstructorHelpers::FClassFinder<UUserWidget> InteractionWidgetRef (TEXT("/Game/UI/WBP_InteractionWidget.WBP_InteractionWidget_C"));
+	if (InteractionWidgetRef.Class)
+	{
+		InteractionWidget->SetWidgetClass(InteractionWidgetRef.Class);
+		InteractionWidget->SetWidgetSpace(EWidgetSpace::Screen);
+		InteractionWidget->SetDrawSize(FVector2D(100.0f, 50.0f));
+		InteractionWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 
-	//static ConstructorHelpers::FClassFinder<UUserWidget> InteractionWidgetRef (TEXT("/Game/UI/WBP_InteractionWidget.WBP_InteractionWidget_C"));
-	//if (InteractionWidgetRef.Class)
-	//{
-	//	InteractionWidget->SetWidgetClass(InteractionWidgetRef.Class);
-	//	InteractionWidget->SetWidgetSpace(EWidgetSpace::Screen);
-	//	InteractionWidget->SetDrawSize(FVector2D(100.0f, 50.0f));
-	//	InteractionWidget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	//}
-
-	//InteractionWidget->SetHiddenInGame(true);
+	
 
 	static ConstructorHelpers::FObjectFinder<UInputAction> InteractionActionRef(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/Actions/IA_Interaction.IA_Interaction'"));
 	if (InteractionActionRef.Object)
@@ -46,15 +45,18 @@ void USukInteractionComponent::BeginPlay()
 	OnComponentBeginOverlap.AddDynamic(this, &USukInteractionComponent::OnSphereBeginOverlap);
 
 	OnComponentEndOverlap.AddDynamic(this, &USukInteractionComponent::OnSphereEndOverlap);
+	//InteractionWidget->SetHiddenInGame(true);
+
 }
 
 void USukInteractionComponent::OnRegister()
 {
 	Super::OnRegister();
 
-	/*InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
-	InteractionWidget->SetRelativeLocation(FVector(0.0f, 2.0f, 0.0f));*/
+	InteractionWidget->AttachToComponent(GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform);
+	InteractionWidget->SetRelativeLocation(FVector(0.0f, 10.0f, 0.0f));
 
+	
 }
 
 // 캐릭터가 범위 안으로 들어오면서 Input을 바인드한다.
@@ -65,6 +67,8 @@ void USukInteractionComponent::OnSphereBeginOverlap(UPrimitiveComponent* Overlap
 	{
 		InRangedActor = OverlappingActor;
 		//InteractionWidget->SetHiddenInGame(false);
+
+		WidgetInstance = InteractionWidget->GetWidget();
 
 		APawn* playerPawn = Cast<APawn>(OtherActor);
 		if (playerPawn)

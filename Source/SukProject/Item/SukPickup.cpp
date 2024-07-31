@@ -16,7 +16,6 @@ ASukPickup::ASukPickup()
 
 	SetInteractionComponentOwner(this);
 
-	
 }
 
 void ASukPickup::OwnerInteraction()
