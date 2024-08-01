@@ -13,8 +13,7 @@ void USukInteractionWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	InteractionText = Cast<UTextBlock>(GetWidgetFromName("InteractionTB"));
-	ensure(InteractionText);
+	
 
 }
 
@@ -24,9 +23,9 @@ void USukInteractionWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 
 }
 
-void USukInteractionWidget::SetInteractionText(FString InText)
+void USukInteractionWidget::SetInteractionText(FText InText)
 {
-	InteractionText->SetText(FText::FromString(InText));
+	InteractionTextWidgetCpp = InText;
 }
 
 

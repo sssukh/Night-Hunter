@@ -7,6 +7,7 @@
 #include "Interface/SukActorInteractionInterface.h"
 #include "EnhancedInputSubsystems.h"
 #include "Character/SukCharacterBase.h"
+#include "UI/SukInteractionWidget.h"
 
 USukInteractionComponent::USukInteractionComponent()
 {
@@ -17,7 +18,7 @@ USukInteractionComponent::USukInteractionComponent()
 	Owner = GetAttachParentActor();
 	
 	InteractionWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("InteractionWidgetCpp"));
-	InteractionWidget->SetupAttachment(GetAttachmentRoot());
+	InteractionWidget->SetupAttachment(this);
 	static ConstructorHelpers::FClassFinder<UUserWidget> InteractionWidgetRef (TEXT("/Game/UI/WBP_InteractionWidget.WBP_InteractionWidget_C"));
 	if (InteractionWidgetRef.Class)
 	{
@@ -36,6 +37,9 @@ USukInteractionComponent::USukInteractionComponent()
 	}
 
 }
+
+
+
 
 void USukInteractionComponent::BeginPlay()
 {
@@ -66,10 +70,7 @@ void USukInteractionComponent::OnSphereBeginOverlap(UPrimitiveComponent* Overlap
 	if (OverlappingActor)
 	{
 		InRangedActor = OverlappingActor;
-		//InteractionWidget->SetHiddenInGame(false);
-
-		WidgetInstance = InteractionWidget->GetWidget();
-
+		
 		APawn* playerPawn = Cast<APawn>(OtherActor);
 		if (playerPawn)
 		{

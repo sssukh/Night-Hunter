@@ -23,12 +23,11 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void SetInteractionText(FString InText);
+	void SetInteractionText(FText InText);
 
 protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Text)
-	TObjectPtr<class UTextBlock> InteractionText;
+	FText InteractionTextWidgetCpp;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = Image)
-	TObjectPtr<class UImage> InteractionImage;
+	
 };

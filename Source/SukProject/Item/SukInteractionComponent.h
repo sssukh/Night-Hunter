@@ -12,7 +12,7 @@
 /**
  * 
  */
-UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS()
 class SUKPROJECT_API USukInteractionComponent : public USphereComponent
 {
 	GENERATED_BODY()
@@ -24,6 +24,7 @@ public:
 	FORCEINLINE AActor* GetOwner() { return Owner; }
 
 	FORCEINLINE class ASukCharacterBase* GetRangedActor() { return InRangedActor; }
+
 	
 protected:
 	virtual void BeginPlay() override;

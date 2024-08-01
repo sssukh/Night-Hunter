@@ -16,17 +16,27 @@ ASukPickup::ASukPickup()
 
 	SetInteractionComponentOwner(this);
 
+	PrimaryActorTick.bCanEverTick = true;
+
+}
+
+void ASukPickup::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void ASukPickup::OwnerInteraction()
 {
 	K2_Interaction();
 
+	// InteractionComponent에서 interact해서 여기로 넘어옴.
+	// 필요한건 PlayerController를 얻는 것.
+
 	// 이게 문제임..
-	ASukCharacterBase* Character = InteractionComponent->GetRangedActor();
+	/*ASukCharacterBase* Character = InteractionComponent->GetRangedActor();
 	ASukPlayerController* PC = Cast<ASukPlayerController>(Character->GetController());
 
-	PC->AddItem(Itemcpp);
+	PC->AddItem(Itemcpp);*/
 
 	Destroy();
 }

@@ -16,6 +16,9 @@ public:
 	// Sets default values for this actor's properties
 	ASukPickup();
 
+	virtual void BeginPlay() override;
+
+	// virtual void PreInitializeComponents() override;
 
 protected:
 	// Action will be defined by Blueprint
@@ -27,7 +30,7 @@ protected:
 	virtual void OwnerInteraction() override;
 	virtual void SetInteractionComponentOwner(AActor* InOwner) override;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite ,Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USukInteractionComponent> InteractionComponent;
 
 
