@@ -8,6 +8,7 @@
 #include "Physics/SukPhysics.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
+#include "Player/SukPlayerController.h"
 
 
 // Sets default values
@@ -64,9 +65,10 @@ void ASukChest::PlayOpenAnimation()
 	}
 }
 
-void ASukChest::OwnerInteraction()
+void ASukChest::OwnerInteraction(APlayerController* InPlayerController)
 {
 	OpenChest();
+	ChestInteractionComponent->SetWidgetInvisible();
 }
 
 void ASukChest::CreateItemInBox(UAnimMontage* InMontage, bool bInterrupted)

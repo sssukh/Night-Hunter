@@ -25,7 +25,7 @@ public:
 
 	FORCEINLINE class ASukCharacterBase* GetRangedActor() { return InRangedActor; }
 
-	
+	void SetWidgetInvisible(); 
 protected:
 	virtual void BeginPlay() override;
 
@@ -59,4 +59,7 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<AActor> Owner;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	TObjectPtr<class ASukPlayerController> PlayerController;
 };

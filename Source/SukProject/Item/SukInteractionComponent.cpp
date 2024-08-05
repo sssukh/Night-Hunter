@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Character/SukCharacterBase.h"
 #include "UI/SukInteractionWidget.h"
+#include "Player/SukPlayerController.h"
 
 USukInteractionComponent::USukInteractionComponent()
 {
@@ -41,6 +42,11 @@ USukInteractionComponent::USukInteractionComponent()
 
 
 
+void USukInteractionComponent::SetWidgetInvisible()
+{
+	InteractionWidget->DetachFromParent();
+}
+
 void USukInteractionComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -49,7 +55,7 @@ void USukInteractionComponent::BeginPlay()
 	OnComponentBeginOverlap.AddDynamic(this, &USukInteractionComponent::OnSphereBeginOverlap);
 
 	OnComponentEndOverlap.AddDynamic(this, &USukInteractionComponent::OnSphereEndOverlap);
-	//InteractionWidget->SetHiddenInGame(true);
+	InteractionWidget->SetHiddenInGame(true);
 
 }
 
@@ -69,6 +75,8 @@ void USukInteractionComponent::OnSphereBeginOverlap(UPrimitiveComponent* Overlap
 	ASukCharacterBase* OverlappingActor = Cast<ASukCharacterBase>(OtherActor);
 	if (OverlappingActor)
 	{
+		InteractionWidget->SetHiddenInGame(false);
+
 		InRangedActor = OverlappingActor;
 		
 		APawn* playerPawn = Cast<APawn>(OtherActor);
@@ -76,13 +84,14 @@ void USukInteractionComponent::OnSphereBeginOverlap(UPrimitiveComponent* Overlap
 		{
 			if (APlayerController* PC = Cast<APlayerController>(playerPawn->GetController()))
 			{
+				PlayerController = Cast<ASukPlayerController>(PC);
+
 				if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
 				{
 					EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Triggered, this, &USukInteractionComponent::Interaction);
 					InteractionBindingIndex = EnhancedInputComponent->GetActionEventBindings().Num() - 1;
 				}
 			}
-			
 		}
 	}
 }
@@ -93,13 +102,13 @@ void USukInteractionComponent::OnSphereEndOverlap(UPrimitiveComponent* Overlappe
 	ASukCharacterBase* OverlappingActor = Cast<ASukCharacterBase>(OtherActor);
 	if (OverlappingActor)
 	{
-		//InteractionWidget->SetHiddenInGame(true);
-
+		InteractionWidget->SetHiddenInGame(true);
 		APawn* playerPawn = Cast<APawn>(OtherActor);
 		if (playerPawn)
 		{
 			if (APlayerController* PC = Cast<APlayerController>(playerPawn->GetController()))
 			{
+
 				if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PC->InputComponent))
 				{
 					if (EnhancedInputComponent->RemoveActionEventBinding(InteractionBindingIndex))
@@ -120,7 +129,7 @@ void USukInteractionComponent::Interaction()
 
 	if (ActorInteraction)
 	{
-		ActorInteraction->OwnerInteraction();
+		ActorInteraction->OwnerInteraction(PlayerController);
 	}
 
 

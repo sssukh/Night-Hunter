@@ -22,6 +22,6 @@ class SUKPROJECT_API ISukActorInteractionInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void OwnerInteraction() = 0;
+	virtual void OwnerInteraction(class APlayerController* InPlayerController) = 0;
 	virtual void SetInteractionComponentOwner(AActor* InOwner) = 0;
 };

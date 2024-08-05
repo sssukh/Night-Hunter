@@ -43,7 +43,7 @@ public:
 
 	bool IsOpened;
 
-	virtual void OwnerInteraction() override;
+	virtual void OwnerInteraction(APlayerController* InPlayerController) override;
 
 
 	// Action will be defined by Blueprint

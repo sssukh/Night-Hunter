@@ -53,6 +53,14 @@ void ASukCharacterPlayer::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Player's Actor Type is CDO")));
+
+	if (GetWorld())
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("World is Exist")));
+
+	}
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{

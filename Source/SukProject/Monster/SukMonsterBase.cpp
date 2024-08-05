@@ -73,6 +73,9 @@ void ASukMonsterBase::BeginPlay()
 	Super::BeginPlay();
 	Spawn();
 	Stat->OnMonsterHpZero.AddUObject(this, &ASukMonsterBase::SetDead);
+
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Monster's Actor Type is CDO")));
+
 }
 
 float ASukMonsterBase::GetAIPatrolRadius()

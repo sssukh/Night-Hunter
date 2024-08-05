@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "SukPickup.generated.h"
 
+
 UCLASS()
 class SUKPROJECT_API ASukPickup : public AActor, public ISukActorInteractionInterface
 {
@@ -17,9 +18,8 @@ public:
 	ASukPickup();
 
 	virtual void BeginPlay() override;
-
+	virtual void PreInitializeComponents() override;
 	// virtual void PreInitializeComponents() override;
-
 protected:
 	// Action will be defined by Blueprint
 	UFUNCTION(BlueprintImplementableEvent, Category = Interaction, Meta = (DisplayName = "Interaction_Cpp"))
@@ -27,14 +27,19 @@ protected:
 
 	
 	// Interface
-	virtual void OwnerInteraction() override;
+	virtual void OwnerInteraction(APlayerController* InPlayerController) override;
 	virtual void SetInteractionComponentOwner(AActor* InOwner) override;
+
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite ,Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USukInteractionComponent> InteractionComponent;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UStaticMeshComponent> ItemStaticMesh;
+
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TObjectPtr<class USukItemInstance> Itemcpp;
+
 
 };

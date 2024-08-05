@@ -5,38 +5,49 @@
 #include "SukInteractionComponent.h"
 #include "Player/SukPlayerController.h"
 #include "Character/SukCharacterBase.h"
+#include "Player/SukPlayerController.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+
 
 // Sets default values
 ASukPickup::ASukPickup()
 {
  	
 	InteractionComponent = CreateDefaultSubobject<USukInteractionComponent>(TEXT("InteractionComponent"));
-	InteractionComponent->SetupAttachment(RootComponent);
+	SetRootComponent(InteractionComponent);
 	InteractionComponent->SetSphereRadius(140.0f);
 
 	SetInteractionComponentOwner(this);
 
-	PrimaryActorTick.bCanEverTick = true;
-
+	
+	ItemStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemStaticMesh"));
+	ItemStaticMesh->SetupAttachment(RootComponent);
 }
 
 void ASukPickup::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// ItemStaticMesh->SetStaticMesh(Itemcpp->Mesh);
 }
 
-void ASukPickup::OwnerInteraction()
+void ASukPickup::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+
+}
+
+void ASukPickup::OwnerInteraction(APlayerController* InPlayerController)
 {
 	K2_Interaction();
 
-	// InteractionComponent에서 interact해서 여기로 넘어옴.
-	// 필요한건 PlayerController를 얻는 것.
-
-	// 이게 문제임..
-	/*ASukCharacterBase* Character = InteractionComponent->GetRangedActor();
-	ASukPlayerController* PC = Cast<ASukPlayerController>(Character->GetController());
-
-	PC->AddItem(Itemcpp);*/
+	ASukPlayerController* PlayerController = Cast<ASukPlayerController>(InPlayerController);
+	if (PlayerController)
+	{
+		PlayerController->AddItem(Itemcpp);
+	}
 
 	Destroy();
 }
@@ -45,6 +56,7 @@ void ASukPickup::SetInteractionComponentOwner(AActor* InOwner)
 {
 	InteractionComponent->SetOwner(InOwner);
 }
+
 
 
 
